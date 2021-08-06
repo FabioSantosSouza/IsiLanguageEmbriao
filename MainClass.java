@@ -5,11 +5,10 @@ public class MainClass{
 double  a;
 double  b;
 String  t1;
-a= _key.nextDouble();
-b= _key.nextDouble();
-a = 1+2*3/b;
-if (a>b) {
-System.out.println(a);}else {
-System.out.println(b);}
-
+a = 15;
+b = 3;
+t1 = "LL";
+while (a>b) {
+System.out.println(a);a = a-b;}
+System.out.println(a);
   }}

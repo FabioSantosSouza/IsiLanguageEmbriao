@@ -3,18 +3,15 @@ programa
   numero a, b;
   texto  t1;
 
-  leia(a);
-  leia(b);
+  a = 15;
+  b = 3;
   t1 = "LL";
-  a = 1 + 2 * 3 / b;
-  
-
-  se ( a > b ) {
-     escreva (a);
+  enquanto (a > b){
+    escreva(a);
+ 	  a = a - b;
   }
-  senao {
-     escreva (b);
-  }
+ 	
+  escreva(a);
   
   
 
