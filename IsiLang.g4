@@ -11,6 +11,7 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 }
@@ -29,14 +30,16 @@ grammar IsiLang;
 	private String _exprID;
 	private String _exprContent;
 	private String _exprDecision;
+	private String _exprRepetition;
 	private ArrayList<AbstractCommand> listaTrue;
 	private ArrayList<AbstractCommand> listaFalse;
-	
+	private ArrayList<AbstractCommand> listaWhile;	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
 			throw new IsiSemanticException("Symbol "+id+" not declared");
 		}
 	}
+
 	
 	public void exibeComandos(){
 		for (AbstractCommand c: program.getComandos()){
@@ -100,11 +103,12 @@ bloco	: { curThread = new ArrayList<AbstractCommand>();
 
 cmd		:  cmdleitura  
  		|  cmdescrita 
- 		|  cmdattrib
- 		|  cmdselecao  
+ 		|  cmdattrib 
+ 		|  cmdselecao
+ 		|  cmdrepeticao
 		;
 		
-cmdleitura	: 'leia' AP
+cmdleitura	: 'leia' AP 
                      ID { verificaID(_input.LT(-1).getText());
                      	  _readID = _input.LT(-1).getText();
                         } 
@@ -137,16 +141,18 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                ATTR { _exprContent = ""; } 
                expr 
                SC
-               {
+               {               	
+					
                	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
                	 stack.peek().add(cmd);
+               	 
                }
 			;
 			
 			
 cmdselecao  :  'se' AP
                     ID    { _exprDecision = _input.LT(-1).getText(); }
-                    OPREL { _exprDecision += _input.LT(-1).getText(); }
+                    REL { _exprDecision += _input.LT(-1).getText(); }
                     (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
                     FP 
                     ACH 
@@ -174,7 +180,8 @@ cmdselecao  :  'se' AP
                    	}
                    )?
             ;
-			
+
+	
 expr		:  termo ( 
 	             OP  { _exprContent += _input.LT(-1).getText();}
 	            termo
@@ -195,7 +202,26 @@ termo		: ID { verificaID(_input.LT(-1).getText());
               }
 			;
 			
-	
+cmdrepeticao  :  'enquanto' AP
+		                    ID    { _exprRepetition = _input.LT(-1).getText(); }
+		                    OPREL { _exprRepetition += _input.LT(-1).getText(); }
+		                    (ID | NUMBER) {_exprRepetition += _input.LT(-1).getText(); }
+		                    FP 
+		                    ACH 
+		                    { curThread = new ArrayList<AbstractCommand>(); 
+		                      stack.push(curThread);
+		                    }
+		                    (cmd)+ 
+		                    
+		                    FCH 
+		                    {
+		                       listaWhile = stack.pop();
+		                       CommandRepeticao cmd = new CommandRepeticao(_exprRepetition, listaWhile);
+		                       stack.peek().add(cmd);	
+		                    } 	
+		    ;                						
+               		
+               			
 AP	: '('
 	;
 	
