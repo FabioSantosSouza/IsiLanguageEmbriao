@@ -1,11 +1,26 @@
 programa
 
-  numero a, b;
-  texto  t1;
-
+  numero a, b, c, d, e ,f;
+  texto  t1,t2;
+  //Comentário em linha 
+  
+  
+  t1 = "alo"; // comentário em linha java-like 
+  
+  a = 2;
+  
+  /* 
+  	Comentário
+  	em 
+  	Bloco
+  */
+  
   a = 15;
   b = 3;
   t1 = "LL";
+  
+  
+  escreva(t1);
   enquanto (a > b){
     escreva(a);
  	  a = a - b;

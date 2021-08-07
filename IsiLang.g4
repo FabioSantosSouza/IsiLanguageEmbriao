@@ -27,6 +27,7 @@ grammar IsiLang;
 	private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();
 	private String _readID;
 	private String _writeID;
+	private int _exprType = -1; // tipo da expressão que foi avaliada
 	private String _exprID;
 	private String _exprContent;
 	private String _exprDecision;
@@ -50,12 +51,28 @@ grammar IsiLang;
 	public void generateCode(){
 		program.generateTarget();
 	}
+	
+	public void printaOla(){
+		System.out.println("Olá teste");
+	}
+	
+	public void exibeVarsNaoUsadas(){
+		System.out.println("As seguintes variáveis não estão sendo ultilizadas");
+		for ( IsiSymbol symbol : symbolTable.getAll() ){
+			IsiVariable simbolo = (IsiVariable) symbol;
+			if (simbolo.getValue() == null ){
+				System.out.println(simbolo.getName());
+			}
+		}
+	}
 }
 
-prog	: 'programa' decl bloco  'fimprog;'
+prog	: 'programa' decl bloco { exibeVarsNaoUsadas(); } 'fimprog;'
            {  program.setVarTable(symbolTable);
            	  program.setComandos(stack.pop());
            	 
+           	 
+			
            } 
 		;
 		
@@ -65,7 +82,7 @@ decl    :  (declaravar)+
         
 declaravar :  tipo ID  {
 	                  _varName = _input.LT(-1).getText();
-	                  _varValue = null;
+	                  _varValue = null; 
 	                  symbol = new IsiVariable(_varName, _tipo, _varValue);
 	                  if (!symbolTable.exists(_varName)){
 	                     symbolTable.add(symbol);	
@@ -136,12 +153,24 @@ cmdescrita	: 'escreva'
 			;
 			
 cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
+					
+                    
                     _exprID = _input.LT(-1).getText();
                    } 
                ATTR { _exprContent = ""; } 
+               
                expr 
+               { 	
+               		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               		currentVar.setValue("debug");
+               		symbolTable.add(currentVar);
+               		if ( _exprType != currentVar.getType() ){
+               	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
+               	 	}
+                
+               }
                SC
-               {
+               { 
                	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
                	 stack.peek().add(cmd);
                }
@@ -207,15 +236,19 @@ expr		:  termo (
 			
 termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
+	              IsiVariable currentVar = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+	              _exprType = currentVar.getType();
                  } 
             | 
               NUMBER
               {
               	_exprContent += _input.LT(-1).getText();
+              	_exprType = IsiVariable.NUMBER;
               }
             | TEXT
               { 
               	_exprContent += _input.LT(-1).getText();
+              	_exprType = IsiVariable.TEXT;
               }
 			;
 			
@@ -261,3 +294,10 @@ TEXT : ASPAS (~'"')* ASPAS
      ;
 	
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
+
+COMMENT
+: '/*' .*? '*/' -> skip
+;
+LINE_COMMENT
+: '//' ~[\r\n]* -> skip
+;
