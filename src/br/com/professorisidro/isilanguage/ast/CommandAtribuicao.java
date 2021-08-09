@@ -14,7 +14,9 @@ public class CommandAtribuicao extends AbstractCommand{
 	@Override
 	public String generateJavaCode() {
 		// TODO Auto-generated method stub
-		return id + " = "+expr+";";
+		String temp = expr.replaceAll("Verdadeiro", "true").replaceAll("Falso","false");
+		
+		return id + " = "+temp+";";
 	}
 	@Override
 	public String toString() {

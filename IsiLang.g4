@@ -32,9 +32,15 @@ grammar IsiLang;
 	private String _exprContent;
 	private String _exprDecision;
 	private String _exprRepetition;
+	
+	private String _exprLOGICContent;
+
 	private ArrayList<AbstractCommand> listaTrue;
 	private ArrayList<AbstractCommand> listaFalse;
 	private ArrayList<AbstractCommand> listaWhile;
+	private ArrayList<AbstractCommand> listaFor; 
+	
+	
 	
 	public void verificaID(String id){
 		if (!symbolTable.exists(id)){
@@ -67,11 +73,11 @@ grammar IsiLang;
 	}
 }
 
-prog	: 'programa' decl bloco { exibeVarsNaoUsadas(); } 'fimprog;'
+prog	: 'programa' decl bloco 'fimprog;'
            {  program.setVarTable(symbolTable);
            	  program.setComandos(stack.pop());
            	 
-           	 
+           	 exibeVarsNaoUsadas();
 			
            } 
 		;
@@ -109,6 +115,7 @@ declaravar :  tipo ID  {
            
 tipo       : 'numero' { _tipo = IsiVariable.NUMBER;  }
            | 'texto'  { _tipo = IsiVariable.TEXT;  }
+           | 'logico'  { _tipo = IsiVariable.LOGIC;  }
            ;
         
 bloco	: { curThread = new ArrayList<AbstractCommand>(); 
@@ -157,9 +164,9 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     
                     _exprID = _input.LT(-1).getText();
                    } 
-               ATTR { _exprContent = ""; } 
+               ATTR { _exprContent = ""; _exprLOGICContent = "";} 
                
-               expr 
+               (expr | Logicexpr) 
                { 	
                		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
                		currentVar.setValue("debug");
@@ -167,11 +174,11 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                		if ( _exprType != currentVar.getType() ){
                	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
                	 	}
-                
+                	//System.out.println(_exprContent.trim());
                }
                SC
                { 
-               	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
+               	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
                	 stack.peek().add(cmd);
                }
 			;
@@ -229,26 +236,43 @@ cmdrepeticao  :  'enquanto' AP
 
 
 expr		:  termo ( 
-	             OP  { _exprContent += _input.LT(-1).getText();}
+	             OP { _exprContent += _input.LT(-1).getText();}
 	            termo
 	            )*
+	            
+			;
+			
+expr		:  termo ( 
+	             BIN_OP_LOGIC { _exprContent += _input.LT(-1).getText();}
+	            termo
+	            )*
+	            
 			;
 			
 termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
+	               _exprLOGICContent += _input.LT(-1).getText();
 	              IsiVariable currentVar = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
 	              _exprType = currentVar.getType();
                  } 
             | 
               NUMBER
-              {
+              {	
+              	_exprLOGICContent += _input.LT(-1).getText();
               	_exprContent += _input.LT(-1).getText();
               	_exprType = IsiVariable.NUMBER;
               }
             | TEXT
               { 
+                _exprLOGICContent += _input.LT(-1).getText();
               	_exprContent += _input.LT(-1).getText();
               	_exprType = IsiVariable.TEXT;
+              }
+			| LOGIC
+              { 
+              	_exprLOGICContent += _input.LT(-1).getText();
+              	_exprContent += _input.LT(-1).getText();
+              	_exprType = IsiVariable.LOGIC;
               }
 			;
 			
@@ -292,7 +316,14 @@ ASPAS : '"'
 
 TEXT : ASPAS (~'"')* ASPAS 
      ;
+
+LOGIC : 'Verdadeiro' | 'Falso' ;
+
 	
+BIN_OP_LOGIC	: '&&' | '||' ;
+
+UNIT_OP_LOGIC : '!' ; 
+
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
 
 COMMENT

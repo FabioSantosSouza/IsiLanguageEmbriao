@@ -2,18 +2,11 @@ programa
 
   numero a, b, c, d, e ,f;
   texto  t1,t2;
-  //Comentário em linha 
+  logico teste; 
+  teste = Falso || Verdadeiro && Falso ;
   
-  
-  t1 = "alo"; // comentário em linha java-like 
-  
-  a = 2;
-  
-  /* 
-  	Comentário
-  	em 
-  	Bloco
-  */
+  escreva(teste);
+  t1 = "alo"; 
   
   a = 15;
   b = 3;
