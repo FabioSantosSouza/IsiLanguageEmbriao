@@ -133,6 +133,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 */
 	void exitCmdrepeticao(IsiLangParser.CmdrepeticaoContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#cmdfacaenquanto}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#cmdfacaenquanto}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#expr}.
 	 * @param ctx the parse tree
 	 */
@@ -142,6 +152,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr(IsiLangParser.ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#logicexpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicexpr(IsiLangParser.LogicexprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#logicexpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicexpr(IsiLangParser.LogicexprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#termo}.
 	 * @param ctx the parse tree

@@ -33,12 +33,16 @@ grammar IsiLang;
 	private String _exprDecision;
 	private String _exprRepetition;
 	
+	private String _exprDoWhile;
+
+
 	private String _exprLOGICContent;
 
 	private ArrayList<AbstractCommand> listaTrue;
 	private ArrayList<AbstractCommand> listaFalse;
 	private ArrayList<AbstractCommand> listaWhile;
 	private ArrayList<AbstractCommand> listaFor; 
+	private ArrayList<AbstractCommand> listaDoWhile; 
 	
 	
 	
@@ -129,7 +133,8 @@ cmd		:  cmdleitura
  		|  cmdescrita 
  		|  cmdattrib
  		|  cmdselecao
-		|  cmdrepeticao  
+		|  cmdrepeticao
+		|  cmdfacaenquanto
 		;
 		
 cmdleitura	: 'leia' AP
@@ -166,7 +171,7 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                    } 
                ATTR { _exprContent = ""; _exprLOGICContent = "";} 
                
-               (expr | Logicexpr) 
+               (expr | logicexpr) 
                { 	
                		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
                		currentVar.setValue("debug");
@@ -234,6 +239,35 @@ cmdrepeticao  :  'enquanto' AP
 		                    } 	
 		    ; 
 
+cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH 
+		                    { 
+							  curThread = new ArrayList<AbstractCommand>(); 
+		                      stack.push(curThread);
+		                    }
+		                    (cmd)+ 
+		                    
+		                    FCH 
+		                    {
+
+		                    } 
+							'enquanto'
+							AP
+		                    ID    { _exprDoWhile = _input.LT(-1).getText(); }
+		                    OPREL { _exprDoWhile += _input.LT(-1).getText(); }
+		                    (ID | NUMBER) { _exprDoWhile += _input.LT(-1).getText(); }
+		                    FP 
+							SC 
+							{ 
+							    listaDoWhile = stack.pop();
+		                        CommandFacaEnquanto cmd = new CommandFacaEnquanto(_exprDoWhile, listaDoWhile);
+		                        stack.peek().add(cmd); 
+							}
+
+		    ; 
+
+
+
+
 
 expr		:  termo ( 
 	             OP { _exprContent += _input.LT(-1).getText();}
@@ -241,13 +275,13 @@ expr		:  termo (
 	            )*
 	            
 			;
-			
-expr		:  termo ( 
+logicexpr :  termo ( 
 	             BIN_OP_LOGIC { _exprContent += _input.LT(-1).getText();}
 	            termo
 	            )*
 	            
 			;
+
 			
 termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();

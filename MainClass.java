@@ -18,7 +18,7 @@ a = 15;
 b = 3;
 t1 = "LL";
 System.out.println(t1);
-while (a>b) {
-System.out.println(a);a = a-b;}
+do { 
+System.out.println(a);a = a-b;}while (a>b);
 System.out.println(a);
   }}

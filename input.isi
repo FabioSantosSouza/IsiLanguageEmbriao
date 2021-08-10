@@ -14,10 +14,10 @@ programa
   
   
   escreva(t1);
-  enquanto (a > b){
+  faca {
     escreva(a);
  	  a = a - b;
-  }
+  } enquanto (a > b) ;
  	
   escreva(a);
   
