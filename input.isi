@@ -3,7 +3,7 @@ programa
   numero a, b, c, d, e ,f;
   texto  t1,t2;
   logico teste; 
-  teste = Falso || Verdadeiro && Falso ;
+  teste = !Verdadeiro || !Verdadeiro && Falso ;
   
   escreva(teste);
   t1 = "alo"; 

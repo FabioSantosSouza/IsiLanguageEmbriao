@@ -32,7 +32,7 @@ grammar IsiLang;
 	private String _exprContent;
 	private String _exprDecision;
 	private String _exprRepetition;
-	
+	private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 	private String _exprDoWhile;
 
 
@@ -122,7 +122,8 @@ tipo       : 'numero' { _tipo = IsiVariable.NUMBER;  }
            | 'logico'  { _tipo = IsiVariable.LOGIC;  }
            ;
         
-bloco	: { curThread = new ArrayList<AbstractCommand>(); 
+bloco	: { 
+			curThread = new ArrayList<AbstractCommand>(); 
 	        stack.push(curThread);  
           }
           (cmd)+
@@ -183,7 +184,13 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                }
                SC
                { 
-               	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
+				   CommandAtribuicao cmd;
+				if (_exprMOL){
+					cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
+				} else { 
+					cmd = new CommandAtribuicao(_exprID, _exprLOGICContent.trim());
+				}	
+               	 
                	 stack.peek().add(cmd);
                }
 			;
@@ -272,13 +279,24 @@ cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH
 expr		:  termo ( 
 	             OP { _exprContent += _input.LT(-1).getText();}
 	            termo
-	            )*
+	            )* { _exprMOL= true;}
 	            
 			;
-logicexpr :  termo ( 
-	             BIN_OP_LOGIC { _exprContent += _input.LT(-1).getText();}
-	            termo
-	            )*
+logicexpr :  (UNIT_OP_LOGIC)? {   System.out.println(_input.LT(-1).getText());
+                                 if ( _input.LT(-1).getText() == "!") {
+								_exprLOGICContent += _input.LT(-1).getText();
+								}
+				} termo ( 
+							  
+				 BIN_OP_LOGIC { _exprLOGICContent += _input.LT(-1).getText();}
+	           (UNIT_OP_LOGIC)? { 
+				   if ( _input.LT(-1).getText() == "!") {
+								_exprLOGICContent += _input.LT(-1).getText();
+								}
+
+			   } termo
+	            )* {  _exprMOL = false; 
+				System.out.println(_exprLOGICContent);}
 	            
 			;
 

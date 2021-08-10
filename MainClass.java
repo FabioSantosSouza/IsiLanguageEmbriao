@@ -11,7 +11,7 @@ double  e;
 double  f;
 String  t1;
 String  t2;
-teste = false||true&&false;
+teste = true||true&&false;
 System.out.println(teste);
 t1 = "alo";
 a = 15;

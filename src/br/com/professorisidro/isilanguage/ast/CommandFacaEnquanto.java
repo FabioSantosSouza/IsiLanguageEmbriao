@@ -1,7 +1,6 @@
 package br.com.professorisidro.isilanguage.ast;
 
 import java.util.ArrayList;
-
 public class CommandFacaEnquanto extends AbstractCommand{
 	private String condition;
 	private ArrayList<AbstractCommand> lista;

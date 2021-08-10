@@ -112,7 +112,7 @@ public class IsiLangLexer extends Lexer {
 		private String _exprContent;
 		private String _exprDecision;
 		private String _exprRepetition;
-		
+		private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 		private String _exprDoWhile;
 
 
