@@ -1,0 +1,22 @@
+programa
+
+  numero a,b;
+ 
+  a = 5; //comentario
+  
+  /* 
+  	Comentário
+  	em 
+  	Bloco
+  */
+  
+
+  //comando for
+  para(b = 0; b < a; b = b+1){
+      escreva(b);
+  }
+  
+  
+  
+
+fimprog;

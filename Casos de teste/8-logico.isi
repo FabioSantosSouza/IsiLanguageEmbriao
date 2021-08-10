@@ -1,0 +1,6 @@
+programa
+
+  logico teste;  
+  teste = Falso || Verdadeiro && Falso ;
+
+fimprog;

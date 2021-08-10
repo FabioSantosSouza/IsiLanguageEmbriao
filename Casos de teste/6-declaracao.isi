@@ -1,0 +1,15 @@
+programa
+
+  numero a;
+ 
+  a = 15;
+  b = 3;
+  
+  escreva(a);
+  escreva(b);
+  
+  
+  
+  
+
+fimprog;

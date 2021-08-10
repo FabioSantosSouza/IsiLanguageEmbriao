@@ -1,0 +1,14 @@
+programa
+
+  numero a,b;
+ 
+  a = 5;
+  
+  para(b = 0; b < a; b = b+1){
+      escreva(b);
+  }
+  
+  
+  
+
+fimprog;

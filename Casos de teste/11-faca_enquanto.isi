@@ -1,0 +1,16 @@
+programa
+
+  numero a,b;
+ 
+  a = 15;
+  b = 3;
+  
+  faca{
+    escreva(b);
+    b = b + 1;
+  }enquanto(b<a){
+  
+  
+  
+
+fimprog;

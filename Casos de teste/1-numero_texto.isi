@@ -1,0 +1,13 @@
+programa
+
+  numero a;
+  texto b;
+
+  a = 10;
+  b = "Teste texto";
+  
+  escreva(a);
+  escreva(b);
+  
+
+fimprog;

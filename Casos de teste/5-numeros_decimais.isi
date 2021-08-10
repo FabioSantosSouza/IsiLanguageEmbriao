@@ -1,0 +1,10 @@
+programa
+
+  numero a;
+
+  a = 9.99;
+  
+  escreva(a);
+  
+
+fimprog;

@@ -1,0 +1,35 @@
+programa
+
+  numero a, b, c, d, e ,f;
+  texto  t1,t2;
+  //Comentário em linha 
+  
+  
+  t1 = "alo"; // comentário em linha java-like 
+  
+  a = 2;
+  
+  /* 
+  	Comentário
+  	em 
+  	Bloco
+  */
+  
+  a = 15;
+  b = 3;
+  t1 = "LL";  
+  escreva(t1);
+  enquanto (a > b){
+    escreva(a);
+ 	  a = a - b;
+  }
+ 
+  a = 5;
+  para(b = 0; b < a; b = b+1){
+  	escreva(b);
+  }
+  escreva(a);
+  
+  
+
+fimprog;
