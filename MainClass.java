@@ -21,4 +21,6 @@ System.out.println(t1);
 do { 
 System.out.println(a);a = a-b;}while (a>b);
 System.out.println(a);
+for (b=0;b<a;b=b+1) {
+System.out.println(b);}
   }}

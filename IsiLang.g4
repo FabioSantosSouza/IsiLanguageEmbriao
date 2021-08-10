@@ -12,6 +12,8 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
+	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
+	import br.com.professorisidro.isilanguage.ast.CommandPara;
 	import java.util.ArrayList;
 	import java.util.Stack;
 }
@@ -34,6 +36,9 @@ grammar IsiLang;
 	private String _exprRepetition;
 	private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 	private String _exprDoWhile;
+	private String _exprForA;
+	private String _exprForB;
+	private String _exprForC;
 
 
 	private String _exprLOGICContent;
@@ -136,6 +141,7 @@ cmd		:  cmdleitura
  		|  cmdselecao
 		|  cmdrepeticao
 		|  cmdfacaenquanto
+		|  cmdpara
 		;
 		
 cmdleitura	: 'leia' AP
@@ -273,7 +279,38 @@ cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH
 		    ; 
 
 
+cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP	
+					ACH					
+                    { curThread = new ArrayList<AbstractCommand>(); 
+                      stack.push(curThread);
+                    }
+                    (cmd)+ 
+                    FCH
+                    {
+                       listaFor = stack.pop();
+                       CommandPara cmd = new CommandPara(_exprForA,_exprForB,_exprForC, listaFor);
+                       stack.peek().add(cmd);	
+                    }
+		;
+					
+incrementoFor: 		ID {_exprForC = _input.LT(-1).getText();}
+					ATTR {_exprForC += _input.LT(-1).getText();}
+					(ID | NUMBER) {_exprForC += _input.LT(-1).getText();}				
+					( OP {_exprForC += _input.LT(-1).getText();}
+					(ID | NUMBER) {_exprForC += _input.LT(-1).getText();}
+					)*
 
+			;			
+
+attrFor:	ID {_exprForA = _input.LT(-1).getText();} 
+			ATTR {_exprForA += '='; }
+			(ID | NUMBER) {_exprForA += _input.LT(-1).getText();}
+	;
+	
+condFor:	ID    {_exprForB = _input.LT(-1).getText(); }
+			OPREL {_exprForB += _input.LT(-1).getText(); } 
+			(ID | NUMBER) {_exprForB += _input.LT(-1).getText(); }
+	;
 
 
 expr		:  termo ( 

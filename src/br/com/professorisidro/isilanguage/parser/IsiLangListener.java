@@ -12,6 +12,8 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
+	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
+	import br.com.professorisidro.isilanguage.ast.CommandPara;
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -142,6 +144,46 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#cmdpara}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdpara(IsiLangParser.CmdparaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#cmdpara}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdpara(IsiLangParser.CmdparaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#incrementoFor}.
+	 * @param ctx the parse tree
+	 */
+	void enterIncrementoFor(IsiLangParser.IncrementoForContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#incrementoFor}.
+	 * @param ctx the parse tree
+	 */
+	void exitIncrementoFor(IsiLangParser.IncrementoForContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#attrFor}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrFor(IsiLangParser.AttrForContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#attrFor}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrFor(IsiLangParser.AttrForContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#condFor}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondFor(IsiLangParser.CondForContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#condFor}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondFor(IsiLangParser.CondForContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#expr}.
 	 * @param ctx the parse tree

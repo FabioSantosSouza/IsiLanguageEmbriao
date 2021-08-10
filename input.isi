@@ -21,6 +21,8 @@ programa
  	
   escreva(a);
   
-  
+  para(b=0;b<a;b=b+1){
+    escreva(b);
+  }
 
 fimprog;
