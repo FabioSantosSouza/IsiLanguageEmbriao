@@ -30,7 +30,8 @@ Projeto-Compiladores:
   hoje : 
     [+] Arrumar as expr para logic types 
     [] lações trabalhando com logic types 
-    [] arummar os erros e avisos 
+    [+] arummar os erros e avisos 
     [] BUG var block
-    [] tipo vetor, declaração, atribuição vetor, atribuição em indice 
+    [] tipo vetor, declaração, atribuição vetor, atribuição em indice
+
     

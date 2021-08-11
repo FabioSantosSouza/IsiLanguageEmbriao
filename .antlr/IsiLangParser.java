@@ -147,6 +147,7 @@ public class IsiLangParser extends Parser {
 		private ArrayList<AbstractCommand> listaFor; 
 		private ArrayList<AbstractCommand> listaDoWhile; 
 		
+		private static final String[] TYPPES = {"NUMERO","TEXTO","LOGICO"};
 		
 		
 		public void verificaID(String id){
@@ -220,7 +221,8 @@ public class IsiLangParser extends Parser {
 			bloco();
 			setState(43);
 			match(T__1);
-			  program.setVarTable(symbolTable);
+			  
+						  program.setVarTable(symbolTable);
 			           	  program.setComandos(stack.pop());
 			           	 
 			           	 exibeVarsNaoUsadas();
@@ -721,7 +723,7 @@ public class IsiLangParser extends Parser {
 			               		symbolTable.add(currentVar); 
 
 			               		if ( _exprType != currentVar.getType() ){
-			               	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
+			               	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()] + " but got " + TYPPES[_exprType] +"\n");
 			               	 	}
 
 			               

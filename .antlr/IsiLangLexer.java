@@ -137,6 +137,7 @@ public class IsiLangLexer extends Lexer {
 		private ArrayList<AbstractCommand> listaFor; 
 		private ArrayList<AbstractCommand> listaDoWhile; 
 		
+		private static final String[] TYPPES = {"NUMERO","TEXTO","LOGICO"};
 		
 		
 		public void verificaID(String id){

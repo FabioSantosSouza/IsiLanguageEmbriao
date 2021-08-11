@@ -49,6 +49,7 @@ grammar IsiLang;
 	private ArrayList<AbstractCommand> listaFor; 
 	private ArrayList<AbstractCommand> listaDoWhile; 
 	
+	private static final String[] TYPPES = {"NUMERO","TEXTO","LOGICO"};
 	
 	
 	public void verificaID(String id){
@@ -92,7 +93,8 @@ grammar IsiLang;
 }
 
 prog	: 'programa' decl bloco 'fimprog;'
-           {  program.setVarTable(symbolTable);
+           {  
+			  program.setVarTable(symbolTable);
            	  program.setComandos(stack.pop());
            	 
            	 exibeVarsNaoUsadas();
@@ -194,7 +196,7 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                		symbolTable.add(currentVar); 
 
                		if ( _exprType != currentVar.getType() ){
-               	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
+               	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()] + " but got " + TYPPES[_exprType] +"\n");
                	 	}
 
                }

@@ -2,22 +2,6 @@ programa
 
   numero a, b, c;
   texto  t1,t2,t3;
-  a = 1;
-  b = 0;
-
-  enquanto(a<10){         
-    
-    
-    escreva(a);
-    a = a + 1;
-    
-    
-    enquanto(b<10){
-      escreva(b);
-      b = b +1;
-    }
-
-
-  }
+  t = 5;
 
 fimprog;
