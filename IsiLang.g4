@@ -171,7 +171,7 @@ cmdescrita	: 'escreva'
                }
 			;
 			
-cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
+cmdattrib	:  ID { verificaID(_input.LT(-1).getText());  
 					
                     
                     _exprID = _input.LT(-1).getText();
@@ -182,11 +182,12 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                { 	
                		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
                		currentVar.setValue("debug");
-               		symbolTable.add(currentVar);
+               		symbolTable.add(currentVar); 
+
                		if ( _exprType != currentVar.getType() ){
                	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
                	 	}
-                	//System.out.println(_exprContent.trim());
+                	System.out.println("expressão antes da atribuição" + _exprLOGICContent);
                }
                SC
                { 
@@ -319,49 +320,56 @@ expr		:  termo (
 	            )* { _exprMOL= true;}
 	            
 			;
-logicexpr :  (UNIT_OP_LOGIC)? {   System.out.println(_input.LT(-1).getText());
-                                 if ( _input.LT(-1).getText() == "!") {
-								_exprLOGICContent += _input.LT(-1).getText();
-								}
-				} termo ( 
-							  
-				 BIN_OP_LOGIC { _exprLOGICContent += _input.LT(-1).getText();}
-	           (UNIT_OP_LOGIC)? { 
-				   if ( _input.LT(-1).getText() == "!") {
-								_exprLOGICContent += _input.LT(-1).getText();
-								}
+logicexpr :  logicterm { _exprMOL = false;} ( BIN_OP_LOGIC { _exprLOGICContent += _input.LT(-1).getText(); } 
+			 logicterm )* ; 
 
-			   } termo
-	            )* {  _exprMOL = false; 
-				System.out.println(_exprLOGICContent);}
-	            
+
+logicterm :  ID { 
+				verificaID(_input.LT(-1).getText());
+	            _exprLOGICContent += _input.LT(-1).getText();
+	            IsiVariable currentVar1 = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+	            _exprType = currentVar1.getType();
+
+				  
+				 }
+			|	                           
+			 UNIT_OP_LOGIC ID 
+			 {
+
+				 verificaID(_input.LT(-1).getText());
+	            _exprLOGICContent +=  "!" + _input.LT(-1).getText();
+	            IsiVariable currentVar2 = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
+	            _exprType = currentVar2.getType();
+			 }
+			 |
+			 LOGIC { 
+				_exprLOGICContent += _input.LT(-1).getText();
+              	_exprType = IsiVariable.LOGIC; 
+				  System.out.println("caso certo");
+			 } 
+			 | 
+			 UNIT_OP_LOGIC LOGIC {
+				 _exprLOGICContent += "!" + _input.LT(-1).getText();
+              	_exprType = IsiVariable.LOGIC; 
+			 } 
 			;
 
-			
+
 termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
-	               _exprLOGICContent += _input.LT(-1).getText();
 	              IsiVariable currentVar = (IsiVariable) symbolTable.get(_input.LT(-1).getText());
 	              _exprType = currentVar.getType();
                  } 
             | 
               NUMBER
               {	
-              	_exprLOGICContent += _input.LT(-1).getText();
               	_exprContent += _input.LT(-1).getText();
               	_exprType = IsiVariable.NUMBER;
               }
             | TEXT
               { 
-                _exprLOGICContent += _input.LT(-1).getText();
               	_exprContent += _input.LT(-1).getText();
               	_exprType = IsiVariable.TEXT;
-              }
-			| LOGIC
-              { 
-              	_exprLOGICContent += _input.LT(-1).getText();
-              	_exprContent += _input.LT(-1).getText();
-              	_exprType = IsiVariable.LOGIC;
               }
 			;
 			

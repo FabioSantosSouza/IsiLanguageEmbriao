@@ -4,23 +4,28 @@ public class MainClass{
        Scanner _key = new Scanner(System.in);
 double  a;
 boolean teste;
+boolean ultimo;
 double  b;
 double  c;
 double  d;
 double  e;
 double  f;
+boolean bo;
+boolean dale;
 String  t1;
 String  t2;
-teste = true||true&&false;
-System.out.println(teste);
-t1 = "alo";
-a = 15;
-b = 3;
-t1 = "LL";
-System.out.println(t1);
-do { 
-System.out.println(a);a = a-b;}while (a>b);
-System.out.println(a);
-for (b=0;b<a;b=b+1) {
-System.out.println(b);}
+String  t3;
+bo = true;
+teste = !bo||bo&&true;
+dale = !teste&&bo||true;
+t1 = "ALO";
+t2 = "Dale";
+t3 = t1+t2;
+a = 1;
+b = 2;
+c = a*2+3+b;
+d = 10101;
+e = 1.10;
+f = a+b+c+b+d*3*e;
+ultimo = true||false;
   }}

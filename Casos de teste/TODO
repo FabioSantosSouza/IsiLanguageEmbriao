@@ -28,7 +28,7 @@ Projeto-Compiladores:
   
 
   hoje : 
-    [] Arrumar as expr para logic types 
+    [+] Arrumar as expr para logic types 
     [] lações trabalhando com logic types 
     [] arummar os erros e avisos 
     [] BUG var block
