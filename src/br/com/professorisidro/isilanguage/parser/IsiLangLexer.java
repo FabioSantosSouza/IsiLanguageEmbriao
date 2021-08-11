@@ -120,7 +120,7 @@ public class IsiLangLexer extends Lexer {
 		private String _exprForB;
 		private String _exprForC;
 
-
+		private Stack<String> whileStatements = new Stack<String>();
 		private String _exprLOGICContent;
 
 		private ArrayList<AbstractCommand> listaTrue;
@@ -147,18 +147,27 @@ public class IsiLangLexer extends Lexer {
 			program.generateTarget();
 		}
 		
-		public void printaOla(){
-			System.out.println("Olá teste");
-		}
+
 		
 		public void exibeVarsNaoUsadas(){
-			System.out.println("As seguintes variáveis não estão sendo ultilizadas");
+			boolean naoUsadas = false;
 			for ( IsiSymbol symbol : symbolTable.getAll() ){
 				IsiVariable simbolo = (IsiVariable) symbol;
 				if (simbolo.getValue() == null ){
-					System.out.println(simbolo.getName());
+					naoUsadas = true;
+					break;
 				}
 			}
+			
+			if (naoUsadas) { 
+				System.out.println("***Warning***\nThe follow variables is declared but not used!");
+					for ( IsiSymbol symbol : symbolTable.getAll() ){
+					IsiVariable simbolo = (IsiVariable) symbol;
+					if (simbolo.getValue() == null ){
+						System.out.println(simbolo.getName());
+					}
+				}
+			 }
 		}
 
 

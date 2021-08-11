@@ -138,7 +138,7 @@ public class IsiLangParser extends Parser {
 		private String _exprForB;
 		private String _exprForC;
 
-
+		private Stack<String> whileStatements = new Stack<String>();
 		private String _exprLOGICContent;
 
 		private ArrayList<AbstractCommand> listaTrue;
@@ -165,18 +165,27 @@ public class IsiLangParser extends Parser {
 			program.generateTarget();
 		}
 		
-		public void printaOla(){
-			System.out.println("Olá teste");
-		}
+
 		
 		public void exibeVarsNaoUsadas(){
-			System.out.println("As seguintes variáveis não estão sendo ultilizadas");
+			boolean naoUsadas = false;
 			for ( IsiSymbol symbol : symbolTable.getAll() ){
 				IsiVariable simbolo = (IsiVariable) symbol;
 				if (simbolo.getValue() == null ){
-					System.out.println(simbolo.getName());
+					naoUsadas = true;
+					break;
 				}
 			}
+			
+			if (naoUsadas) { 
+				System.out.println("***Warning***\nThe follow variables is declared but not used!");
+					for ( IsiSymbol symbol : symbolTable.getAll() ){
+					IsiVariable simbolo = (IsiVariable) symbol;
+					if (simbolo.getValue() == null ){
+						System.out.println(simbolo.getName());
+					}
+				}
+			 }
 		}
 
 	public IsiLangParser(TokenStream input) {
@@ -714,7 +723,7 @@ public class IsiLangParser extends Parser {
 			               		if ( _exprType != currentVar.getType() ){
 			               	 		throw new IsiSemanticException("Type mismatch at variable named #"+currentVar.getName()+"#, expecting  "+ _exprType + " but got " + currentVar.getType() +"\n");
 			               	 	}
-			                	System.out.println("expressão antes da atribuição" + _exprLOGICContent);
+
 			               
 			setState(112);
 			match(SC);
@@ -927,6 +936,9 @@ public class IsiLangParser extends Parser {
 				consume();
 			}
 			_exprRepetition += _input.LT(-1).getText(); 
+				 						
+										whileStatements.push(_exprRepetition);
+										
 			setState(154);
 			match(FP);
 			setState(155);
@@ -952,7 +964,7 @@ public class IsiLangParser extends Parser {
 			match(FCH);
 
 					                       listaWhile = stack.pop();
-					                       CommandRepeticao cmd = new CommandRepeticao(_exprRepetition, listaWhile);
+					                       CommandRepeticao cmd = new CommandRepeticao(whileStatements.pop(), listaWhile);
 					                       stack.peek().add(cmd);	
 					                    
 			}
@@ -1515,7 +1527,7 @@ public class IsiLangParser extends Parser {
 				 
 								_exprLOGICContent += _input.LT(-1).getText();
 				              	_exprType = IsiVariable.LOGIC; 
-								  System.out.println("caso certo");
+
 							 
 				}
 				break;

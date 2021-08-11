@@ -1,25 +1,23 @@
 programa
 
-  numero a, b, c, d, e ,f;
+  numero a, b, c;
   texto  t1,t2,t3;
-  logico teste,bo, dale , ultimo; 
-  bo = Verdadeiro;
-  
-  teste = !bo || bo && Verdadeiro;
-  dale = !teste && bo || Verdadeiro;
-
-  t1 = "ALO";
-  t2 = "Dale";
-  t3 = t1 + t2;
-
-
   a = 1;
-  b = 2; 
-  c = a * 2 + 3 + b;
-  d = 10101;
-  e = 1.10;
-  f = a +  b + c +b +d *3*e;
+  b = 0;
 
-  ultimo = Verdadeiro || Falso;
+  enquanto(a<10){         
+    
+    
+    escreva(a);
+    a = a + 1;
+    
+    
+    enquanto(b<10){
+      escreva(b);
+      b = b +1;
+    }
+
+
+  }
 
 fimprog;
