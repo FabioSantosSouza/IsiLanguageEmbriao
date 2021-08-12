@@ -34,4 +34,7 @@ Projeto-Compiladores:
     [] BUG var block
     [] tipo vetor, declaração, atribuição vetor, atribuição em indice
 
+  amanha :
+    [] logic && (b< 10)  ??
+    [] c < a*b ??
     

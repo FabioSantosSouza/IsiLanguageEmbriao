@@ -1,7 +1,30 @@
 programa
 
-  numero a, b, c;
-  texto  t1,t2,t3;
-  t = 5;
-
+  numero a, b,c,d,e;
+  logico teste;
+  teste = Verdadeiro;
+  a = 10;
+  b = 0;
+  c = 0;
+  
+  enquanto(b < a){
+    escreva(b);
+    b = b + 1;
+    d = a*b;
+    enquanto(c < d){
+      escreva(c);
+      c = c + b; 
+    }
+  }
+  
+  enquanto(teste){
+    escreva(teste);
+  }
+  
+  para(e = 0; e < a; e = e + 2){
+    escreva(e);
+    para(c = 0; c < e; c = c + 1){
+      escreva(c);
+    }
+  }
 fimprog;

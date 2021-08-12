@@ -6,7 +6,7 @@ public class CommandPara extends AbstractCommand{
 	private String condition1,condition2,condition3;
 	private ArrayList<AbstractCommand> lista;
 	
-	public CommandPara (String c1,String c2, String c3, ArrayList<AbstractCommand> lt) {
+	public CommandPara (String c3,String c2, String c1, ArrayList<AbstractCommand> lt) {
 		this.condition1 = c1;
 		this.condition2 = c2;
 		this.condition3 = c3;

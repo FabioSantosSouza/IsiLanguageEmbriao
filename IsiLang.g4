@@ -33,7 +33,7 @@ grammar IsiLang;
 	private String _exprID;
 	private String _exprContent;
 	private String _exprDecision;
-	private String _exprRepetition;
+	private String _exprWhile;
 	private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 	private String _exprDoWhile;
 	private String _exprForA;
@@ -41,6 +41,8 @@ grammar IsiLang;
 	private String _exprForC;
 
 	private Stack<String> whileStatements = new Stack<String>();
+	private Stack<String> forStatements = new Stack<String>();
+	private Stack<String> dowhileStatements = new Stack<String>();
 	private String _exprLOGICContent;
 
 	private ArrayList<AbstractCommand> listaTrue;
@@ -245,14 +247,9 @@ cmdselecao  :  'se' AP
                    )?
             ;
 
-cmdrepeticao  :  'enquanto' AP
-		                    ID    { _exprRepetition = _input.LT(-1).getText(); }
-		                    OPREL { _exprRepetition += _input.LT(-1).getText(); }
-		                    (ID | NUMBER) {_exprRepetition += _input.LT(-1).getText(); 
-	 						
-							whileStatements.push(_exprRepetition);
-							}
-		                    FP 
+cmdrepeticao  :  'enquanto' AP{_exprLOGICContent = ""; _exprWhile = "";}
+							(condWhile | logicexpr {whileStatements.push(_exprLOGICContent);})
+							FP 
 		                    ACH 
 		                    { curThread = new ArrayList<AbstractCommand>(); 
 		                      stack.push(curThread);
@@ -267,6 +264,13 @@ cmdrepeticao  :  'enquanto' AP
 		                       stack.peek().add(cmd);	
 		                    } 	
 		    ; 
+		    
+condWhile:	ID    {_exprWhile = _input.LT(-1).getText(); }
+			OPREL {_exprWhile += _input.LT(-1).getText(); } 
+			(ID | NUMBER) {_exprWhile += _input.LT(-1).getText(); }
+			{whileStatements.push(_exprWhile);}
+	;
+
 
 cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH 
 		                    { 
@@ -281,18 +285,22 @@ cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH
 		                    } 
 							'enquanto'
 							AP
-		                    ID    { _exprDoWhile = _input.LT(-1).getText(); }
-		                    OPREL { _exprDoWhile += _input.LT(-1).getText(); }
-		                    (ID | NUMBER) { _exprDoWhile += _input.LT(-1).getText(); }
+							(condDoWhile | logicexpr {dowhileStatements.push(_exprLOGICContent);})
 		                    FP 
 							SC 
 							{ 
 							    listaDoWhile = stack.pop();
-		                        CommandFacaEnquanto cmd = new CommandFacaEnquanto(_exprDoWhile, listaDoWhile);
+		                        CommandFacaEnquanto cmd = new CommandFacaEnquanto(dowhileStatements.pop(), listaDoWhile);
 		                        stack.peek().add(cmd); 
 							}
 
 		    ; 
+
+condDoWhile:	ID    {_exprDoWhile = _input.LT(-1).getText(); }
+				OPREL {_exprDoWhile += _input.LT(-1).getText(); } 
+				(ID | NUMBER) {_exprDoWhile += _input.LT(-1).getText(); }
+				{dowhileStatements.push(_exprDoWhile);}
+	;
 
 
 cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP	
@@ -304,7 +312,7 @@ cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP
                     FCH
                     {
                        listaFor = stack.pop();
-                       CommandPara cmd = new CommandPara(_exprForA,_exprForB,_exprForC, listaFor);
+                       CommandPara cmd = new CommandPara(forStatements.pop(),forStatements.pop(),forStatements.pop(), listaFor);
                        stack.peek().add(cmd);	
                     }
 		;
@@ -315,17 +323,23 @@ incrementoFor: 		ID {_exprForC = _input.LT(-1).getText();}
 					( OP {_exprForC += _input.LT(-1).getText();}
 					(ID | NUMBER) {_exprForC += _input.LT(-1).getText();}
 					)*
-
+					{forStatements.push(_exprForC);}
 			;			
 
-attrFor:	ID {_exprForA = _input.LT(-1).getText();} 
+attrFor:	ID {_exprForA = _input.LT(-1).getText();
+				IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprForA);
+               	currentVar.setValue("debug");
+               	symbolTable.add(currentVar);
+               	} 
 			ATTR {_exprForA += '='; }
 			(ID | NUMBER) {_exprForA += _input.LT(-1).getText();}
+			{forStatements.push(_exprForA);}
 	;
 	
 condFor:	ID    {_exprForB = _input.LT(-1).getText(); }
 			OPREL {_exprForB += _input.LT(-1).getText(); } 
 			(ID | NUMBER) {_exprForB += _input.LT(-1).getText(); }
+			{forStatements.push(_exprForB);}
 	;
 
 

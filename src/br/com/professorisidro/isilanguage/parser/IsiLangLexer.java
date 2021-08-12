@@ -113,7 +113,7 @@ public class IsiLangLexer extends Lexer {
 		private String _exprID;
 		private String _exprContent;
 		private String _exprDecision;
-		private String _exprRepetition;
+		private String _exprWhile;
 		private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 		private String _exprDoWhile;
 		private String _exprForA;
@@ -121,6 +121,8 @@ public class IsiLangLexer extends Lexer {
 		private String _exprForC;
 
 		private Stack<String> whileStatements = new Stack<String>();
+		private Stack<String> forStatements = new Stack<String>();
+		private Stack<String> dowhileStatements = new Stack<String>();
 		private String _exprLOGICContent;
 
 		private ArrayList<AbstractCommand> listaTrue;

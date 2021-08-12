@@ -135,6 +135,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 */
 	void exitCmdrepeticao(IsiLangParser.CmdrepeticaoContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#condWhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondWhile(IsiLangParser.CondWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#condWhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondWhile(IsiLangParser.CondWhileContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#cmdfacaenquanto}.
 	 * @param ctx the parse tree
 	 */
@@ -144,6 +154,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#condDoWhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondDoWhile(IsiLangParser.CondDoWhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#condDoWhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondDoWhile(IsiLangParser.CondDoWhileContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#cmdpara}.
 	 * @param ctx the parse tree

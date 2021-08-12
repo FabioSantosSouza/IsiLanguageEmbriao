@@ -165,6 +165,18 @@ public class IsiLangBaseListener implements IsiLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCondWhile(IsiLangParser.CondWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondWhile(IsiLangParser.CondWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -172,6 +184,18 @@ public class IsiLangBaseListener implements IsiLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmdfacaenquanto(IsiLangParser.CmdfacaenquantoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondDoWhile(IsiLangParser.CondDoWhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondDoWhile(IsiLangParser.CondDoWhileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
