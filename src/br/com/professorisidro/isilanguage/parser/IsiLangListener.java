@@ -115,6 +115,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 */
 	void exitCmdattrib(IsiLangParser.CmdattribContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#attrib}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrib(IsiLangParser.AttribContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#attrib}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrib(IsiLangParser.AttribContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#cmdselecao}.
 	 * @param ctx the parse tree
 	 */
@@ -124,6 +134,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdselecao(IsiLangParser.CmdselecaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#condse}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondse(IsiLangParser.CondseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#condse}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondse(IsiLangParser.CondseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#cmdrepeticao}.
 	 * @param ctx the parse tree
@@ -174,16 +194,6 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmdpara(IsiLangParser.CmdparaContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link IsiLangParser#incrementoFor}.
-	 * @param ctx the parse tree
-	 */
-	void enterIncrementoFor(IsiLangParser.IncrementoForContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link IsiLangParser#incrementoFor}.
-	 * @param ctx the parse tree
-	 */
-	void exitIncrementoFor(IsiLangParser.IncrementoForContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#attrFor}.
 	 * @param ctx the parse tree

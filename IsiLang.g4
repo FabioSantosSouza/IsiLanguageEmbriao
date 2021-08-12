@@ -36,13 +36,12 @@ grammar IsiLang;
 	private String _exprWhile;
 	private boolean _exprMOL; // true for logic expr  0 for the others expr types 
 	private String _exprDoWhile;
-	private String _exprForA;
 	private String _exprForB;
-	private String _exprForC;
-
+	private Stack<String> ifStatements = new Stack<String>();
 	private Stack<String> whileStatements = new Stack<String>();
 	private Stack<String> forStatements = new Stack<String>();
 	private Stack<String> dowhileStatements = new Stack<String>();
+	
 	private String _exprLOGICContent;
 
 	private ArrayList<AbstractCommand> listaTrue;
@@ -173,18 +172,35 @@ cmdleitura	: 'leia' AP
 			
 cmdescrita	: 'escreva' 
                  AP 
-                 ID { verificaID(_input.LT(-1).getText());
-	                  _writeID = _input.LT(-1).getText();
-                     } 
+				 (expr | logicexpr){_exprLOGICContent = "";}
                  FP 
                  SC
                {
-               	  CommandEscrita cmd = new CommandEscrita(_writeID);
+               	CommandEscrita cmd;
+				if (_exprMOL){
+					cmd = new CommandEscrita(_exprContent.trim());
+				} else { 
+					cmd = new CommandEscrita(_exprLOGICContent.trim());
+				}
                	  stack.peek().add(cmd);
                }
 			;
 			
-cmdattrib	:  ID { verificaID(_input.LT(-1).getText());  
+cmdattrib	:  attrib
+               SC
+               { 
+				   CommandAtribuicao cmd;
+				if (_exprMOL){
+					cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
+				} else { 
+					cmd = new CommandAtribuicao(_exprID, _exprLOGICContent.trim());
+				}	
+               	 
+               	 stack.peek().add(cmd);
+               }
+			;
+			
+attrib	:	ID { verificaID(_input.LT(-1).getText());  
 					
                     
                     _exprID = _input.LT(-1).getText();
@@ -202,24 +218,10 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                	 	}
 
                }
-               SC
-               { 
-				   CommandAtribuicao cmd;
-				if (_exprMOL){
-					cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
-				} else { 
-					cmd = new CommandAtribuicao(_exprID, _exprLOGICContent.trim());
-				}	
-               	 
-               	 stack.peek().add(cmd);
-               }
-			;
-			
+		;
 			
 cmdselecao  :  'se' AP
-                    ID    { _exprDecision = _input.LT(-1).getText(); }
-                    OPREL { _exprDecision += _input.LT(-1).getText(); }
-                    (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
+					(condse | logicexpr {ifStatements.push(_exprLOGICContent);})
                     FP 
                     ACH 
                     { curThread = new ArrayList<AbstractCommand>(); 
@@ -228,24 +230,32 @@ cmdselecao  :  'se' AP
                     (cmd)+ 
                     
                     FCH 
-                    {
-                       listaTrue = stack.pop();	
-                    } 
+                    {listaTrue = stack.pop();} 
                    ('senao' 
                    	 ACH
                    	 {
                    	 	curThread = new ArrayList<AbstractCommand>();
                    	 	stack.push(curThread);
                    	 } 
-                   	(cmd+) 
+                   	(cmd)+
+                   	
                    	FCH
-                   	{
-                   		listaFalse = stack.pop();
-                   		CommandDecisao cmd = new CommandDecisao(_exprDecision, listaTrue, listaFalse);
+                   	{listaFalse = stack.pop();} 
+                   )?                   
+                   {                   		
+                   		CommandDecisao cmd = new CommandDecisao(ifStatements.pop(), listaTrue, listaFalse);
                    		stack.peek().add(cmd);
-                   	}
-                   )?
+                   		listaTrue = null;
+                   		listaFalse = null;
+                   }
             ;
+
+condse	:	ID    {_exprDecision = _input.LT(-1).getText(); }
+			OPREL {_exprDecision += _input.LT(-1).getText(); } 
+			expr {_exprDecision += _exprContent;}
+			{ifStatements.push(_exprDecision);
+			System.out.println(_exprDecision);}
+		;
 
 cmdrepeticao  :  'enquanto' AP{_exprLOGICContent = ""; _exprWhile = "";}
 							(condWhile | logicexpr {whileStatements.push(_exprLOGICContent);})
@@ -303,7 +313,7 @@ condDoWhile:	ID    {_exprDoWhile = _input.LT(-1).getText(); }
 	;
 
 
-cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP	
+cmdpara	:	'para' 	AP	attrFor SC condFor SC attrFor FP	
 					ACH					
                     { curThread = new ArrayList<AbstractCommand>(); 
                       stack.push(curThread);
@@ -317,23 +327,8 @@ cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP
                     }
 		;
 					
-incrementoFor: 		ID {_exprForC = _input.LT(-1).getText();
-						IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprForA);
-               			currentVar.setValue("debug");
-               			symbolTable.add(currentVar);}
-					ATTR {_exprForC += _input.LT(-1).getText();}
-					expr {_exprForC += _exprContent;}
-					{forStatements.push(_exprForC);}
-			;			
-
-attrFor:	ID {_exprForA = _input.LT(-1).getText();
-				IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprForA);
-               	currentVar.setValue("debug");
-               	symbolTable.add(currentVar);
-               	} 
-			ATTR {_exprForA += '='; }
-			expr {_exprForA += _exprContent;}
-			{forStatements.push(_exprForA);}
+attrFor:	attrib
+			{forStatements.push(_exprID+"="+_exprContent);}
 	;
 	
 condFor:	ID    {_exprForB = _input.LT(-1).getText(); }

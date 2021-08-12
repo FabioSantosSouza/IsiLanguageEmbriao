@@ -7,6 +7,27 @@ programa
   b = 0;
   c = 0;
   
+  se(a>10){
+  	escreva(c);
+  }
+  
+  
+  
+  se(a > b+15){
+  	se(b>5){
+  		escreva(b);
+  	}senao{
+  		escreva(b);
+  	}
+  	escreva(a);
+  }senao{
+  	escreva(teste);
+  }
+  
+  se(a>10){
+  	escreva(c);
+  }
+  
   enquanto(b < a+3){
     escreva(b);
     b = b + 1;
@@ -17,7 +38,7 @@ programa
     }
   }
   
-  enquanto(teste){
+  enquanto(!teste){
     escreva(teste);
   }
   
