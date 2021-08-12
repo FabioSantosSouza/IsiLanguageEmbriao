@@ -36,5 +36,3 @@ Projeto-Compiladores:
 
   amanha :
     [] logic && (b< 10)  ??
-    [] c < a*b ??
-    

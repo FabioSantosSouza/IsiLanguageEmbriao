@@ -171,8 +171,8 @@ cmdleitura	: 'leia' AP
 			;
 			
 cmdescrita	: 'escreva' 
-                 AP 
-				 (expr | logicexpr){_exprLOGICContent = "";}
+                 AP {_exprLOGICContent = "";}
+				 (expr | logicexpr)
                  FP 
                  SC
                {

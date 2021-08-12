@@ -705,23 +705,23 @@ public class IsiLangParser extends Parser {
 			match(T__6);
 			setState(102);
 			match(AP);
-			setState(105);
+			_exprLOGICContent = "";
+			setState(106);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
-				setState(103);
+				setState(104);
 				expr();
 				}
 				break;
 			case 2:
 				{
-				setState(104);
+				setState(105);
 				logicexpr();
 				}
 				break;
 			}
-			_exprLOGICContent = "";
 			setState(108);
 			match(FP);
 			setState(109);
@@ -1874,7 +1874,7 @@ public class IsiLangParser extends Parser {
 		"\2\3\2\3\2\3\2\3\3\6\38\n\3\r\3\16\39\3\4\3\4\3\4\3\4\3\4\3\4\7\4B\n\4"+
 		"\f\4\16\4E\13\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\5\5O\n\5\3\6\3\6\6\6S"+
 		"\n\6\r\6\16\6T\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7^\n\7\3\b\3\b\3\b\3\b\3"+
-		"\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\5\tl\n\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3"+
+		"\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\5\tm\n\t\3\t\3\t\3\t\3\t\3\n\3\n\3"+
 		"\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\5\13}\n\13\3\13\3\13\3\f\3\f\3\f"+
 		"\3\f\3\f\3\f\5\f\u0087\n\f\3\f\3\f\3\f\3\f\6\f\u008d\n\f\r\f\16\f\u008e"+
 		"\3\f\3\f\3\f\3\f\3\f\3\f\6\f\u0097\n\f\r\f\16\f\u0098\3\f\3\f\3\f\5\f"+
@@ -1905,8 +1905,8 @@ public class IsiLangParser extends Parser {
 		"\2X^\5\22\n\2Y^\5\26\f\2Z^\5\32\16\2[^\5\36\20\2\\^\5\"\22\2]V\3\2\2\2"+
 		"]W\3\2\2\2]X\3\2\2\2]Y\3\2\2\2]Z\3\2\2\2][\3\2\2\2]\\\3\2\2\2^\r\3\2\2"+
 		"\2_`\7\b\2\2`a\7\17\2\2ab\7\30\2\2bc\b\b\1\2cd\7\20\2\2de\7\21\2\2ef\b"+
-		"\b\1\2f\17\3\2\2\2gh\7\t\2\2hk\7\17\2\2il\5(\25\2jl\5*\26\2ki\3\2\2\2"+
-		"kj\3\2\2\2lm\3\2\2\2mn\b\t\1\2no\7\20\2\2op\7\21\2\2pq\b\t\1\2q\21\3\2"+
+		"\b\1\2f\17\3\2\2\2gh\7\t\2\2hi\7\17\2\2il\b\t\1\2jm\5(\25\2km\5*\26\2"+
+		"lj\3\2\2\2lk\3\2\2\2mn\3\2\2\2no\7\20\2\2op\7\21\2\2pq\b\t\1\2q\21\3\2"+
 		"\2\2rs\5\24\13\2st\7\21\2\2tu\b\n\1\2u\23\3\2\2\2vw\7\30\2\2wx\b\13\1"+
 		"\2xy\7\23\2\2y|\b\13\1\2z}\5(\25\2{}\5*\26\2|z\3\2\2\2|{\3\2\2\2}~\3\2"+
 		"\2\2~\177\b\13\1\2\177\25\3\2\2\2\u0080\u0081\7\n\2\2\u0081\u0086\7\17"+
@@ -1962,7 +1962,7 @@ public class IsiLangParser extends Parser {
 		"\2\2\2\u0121\u011c\3\2\2\2\u0121\u011e\3\2\2\2\u0122-\3\2\2\2\u0123\u0124"+
 		"\7\30\2\2\u0124\u012a\b\30\1\2\u0125\u0126\7\31\2\2\u0126\u012a\b\30\1"+
 		"\2\u0127\u0128\7\33\2\2\u0128\u012a\b\30\1\2\u0129\u0123\3\2\2\2\u0129"+
-		"\u0125\3\2\2\2\u0129\u0127\3\2\2\2\u012a/\3\2\2\2\269CNT]k|\u0086\u008e"+
+		"\u0125\3\2\2\2\u0129\u0127\3\2\2\2\u012a/\3\2\2\2\269CNT]l|\u0086\u008e"+
 		"\u0098\u009d\u00b0\u00b8\u00cc\u00d6\u00f1\u0108\u0114\u0121\u0129";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

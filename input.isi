@@ -8,7 +8,9 @@ programa
   c = 0;
   
   se(a>10){
-  	escreva(c);
+  	escreva(Verdadeiro);
+  	escreva(5);
+  	escreva("6");
   }
   
   

@@ -14,7 +14,9 @@ public class MainClass {
 		b = 0;
 		c = 0;
 		if (a > 10) {
-			System.out.println(c);
+			System.out.println(true);
+			System.out.println(5);
+			System.out.println("6");
 		}
 		if (a > b + 15) {
 			if (b > 5) {
@@ -30,7 +32,6 @@ public class MainClass {
 		if (a > 10) {
 			System.out.println(c);
 		}
-		
 		while (b < a + 3) {
 			System.out.println(b);
 			b = b + 1;

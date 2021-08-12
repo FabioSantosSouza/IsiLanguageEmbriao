@@ -10,7 +10,7 @@ public class CommandEscrita extends AbstractCommand {
 	@Override
 	public String generateJavaCode() {
 		// TODO Auto-generated method stub
-		return "System.out.println("+id+");";
+		return "System.out.println("+id.replaceAll("Verdadeiro", "true").replaceAll("Falso","false")+");";
 	}
 	@Override
 	public String toString() {
