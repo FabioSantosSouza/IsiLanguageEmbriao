@@ -7,11 +7,11 @@ programa
   b = 0;
   c = 0;
   
-  enquanto(b < a){
+  enquanto(b < a+3){
     escreva(b);
     b = b + 1;
     d = a*b;
-    enquanto(c < d){
+    enquanto(c < d-2){
       escreva(c);
       c = c + b; 
     }
@@ -21,9 +21,9 @@ programa
     escreva(teste);
   }
   
-  para(e = 0; e < a; e = e + 2){
+  para(e = 0; e < a+2; e = e + 2){
     escreva(e);
-    para(c = 0; c < e; c = c + 1){
+    para(c = 0; c < e+3; c = c + 1){
       escreva(c);
     }
   }

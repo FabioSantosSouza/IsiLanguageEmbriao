@@ -267,7 +267,7 @@ cmdrepeticao  :  'enquanto' AP{_exprLOGICContent = ""; _exprWhile = "";}
 		    
 condWhile:	ID    {_exprWhile = _input.LT(-1).getText(); }
 			OPREL {_exprWhile += _input.LT(-1).getText(); } 
-			(ID | NUMBER) {_exprWhile += _input.LT(-1).getText(); }
+			expr {_exprWhile += _exprContent;}
 			{whileStatements.push(_exprWhile);}
 	;
 
@@ -298,7 +298,7 @@ cmdfacaenquanto  :  'faca' { _exprDoWhile = "";} ACH
 
 condDoWhile:	ID    {_exprDoWhile = _input.LT(-1).getText(); }
 				OPREL {_exprDoWhile += _input.LT(-1).getText(); } 
-				(ID | NUMBER) {_exprDoWhile += _input.LT(-1).getText(); }
+				expr {_exprDoWhile += _exprContent;}
 				{dowhileStatements.push(_exprDoWhile);}
 	;
 
@@ -317,12 +317,12 @@ cmdpara	:	'para' 	AP	attrFor SC condFor SC incrementoFor FP
                     }
 		;
 					
-incrementoFor: 		ID {_exprForC = _input.LT(-1).getText();}
+incrementoFor: 		ID {_exprForC = _input.LT(-1).getText();
+						IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprForA);
+               			currentVar.setValue("debug");
+               			symbolTable.add(currentVar);}
 					ATTR {_exprForC += _input.LT(-1).getText();}
-					(ID | NUMBER) {_exprForC += _input.LT(-1).getText();}				
-					( OP {_exprForC += _input.LT(-1).getText();}
-					(ID | NUMBER) {_exprForC += _input.LT(-1).getText();}
-					)*
+					expr {_exprForC += _exprContent;}
 					{forStatements.push(_exprForC);}
 			;			
 
@@ -332,18 +332,19 @@ attrFor:	ID {_exprForA = _input.LT(-1).getText();
                	symbolTable.add(currentVar);
                	} 
 			ATTR {_exprForA += '='; }
-			(ID | NUMBER) {_exprForA += _input.LT(-1).getText();}
+			expr {_exprForA += _exprContent;}
 			{forStatements.push(_exprForA);}
 	;
 	
 condFor:	ID    {_exprForB = _input.LT(-1).getText(); }
 			OPREL {_exprForB += _input.LT(-1).getText(); } 
-			(ID | NUMBER) {_exprForB += _input.LT(-1).getText(); }
+			expr {_exprForB += _exprContent;}
 			{forStatements.push(_exprForB);}
 	;
 
 
-expr		:  termo ( 
+expr		:  {_exprContent = "";}
+				termo ( 
 	             OP { _exprContent += _input.LT(-1).getText();}
 	            termo
 	            )* { _exprMOL= true;}
