@@ -1,4 +1,4 @@
-// Generated from /home/fabio/Área de Trabalho/IsiLanguageEmbriao-1/IsiLang.g4 by ANTLR 4.8
+// Generated from /home/fabio/Área de Trabalho/IsiLanguageEmbriao-2/IsiLang.g4 by ANTLR 4.8
 
 	import br.com.professorisidro.isilanguage.datastructures.IsiSymbol;
 	import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
@@ -14,6 +14,8 @@
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+	import java.util.HashMap;
+	import java.util.Map;
 
 	import java.util.ArrayList;
 	import java.util.Stack;
@@ -39,7 +41,7 @@ public class IsiLangLexer extends Lexer {
 		T__9=10, T__10=11, T__11=12, AP=13, FP=14, SC=15, OP=16, ATTR=17, VIR=18, 
 		ACH=19, FCH=20, OB=21, CB=22, OPREL=23, ID=24, NUMBER=25, ASPAS=26, TEXT=27, 
 		LOGIC=28, BIN_OP_LOGIC=29, UNIT_OP_LOGIC=30, WS=31, COMMENT=32, LINE_COMMENT=33, 
-		DALE=34;
+		PONTO=34;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -53,7 +55,7 @@ public class IsiLangLexer extends Lexer {
 			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 			"T__9", "T__10", "T__11", "AP", "FP", "SC", "OP", "ATTR", "VIR", "ACH", 
 			"FCH", "OB", "CB", "OPREL", "ID", "NUMBER", "ASPAS", "TEXT", "LOGIC", 
-			"BIN_OP_LOGIC", "UNIT_OP_LOGIC", "WS", "COMMENT", "LINE_COMMENT", "DALE"
+			"BIN_OP_LOGIC", "UNIT_OP_LOGIC", "WS", "COMMENT", "LINE_COMMENT", "PONTO"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -73,7 +75,7 @@ public class IsiLangLexer extends Lexer {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, "AP", "FP", "SC", "OP", "ATTR", "VIR", "ACH", "FCH", "OB", "CB", 
 			"OPREL", "ID", "NUMBER", "ASPAS", "TEXT", "LOGIC", "BIN_OP_LOGIC", "UNIT_OP_LOGIC", 
-			"WS", "COMMENT", "LINE_COMMENT", "DALE"
+			"WS", "COMMENT", "LINE_COMMENT", "PONTO"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -121,6 +123,7 @@ public class IsiLangLexer extends Lexer {
 		private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();
 		private String _readID;
 		private String _writeID;
+		private String _debug;
 		private int _exprType = -1; // tipo da expressão que foi avaliada
 		private String _exprID;
 		private String _exprContent;
@@ -135,8 +138,12 @@ public class IsiLangLexer extends Lexer {
 		private Stack<String> dowhileStatements = new Stack<String>();
 		private String _exprVectorContent;
 
-
-		
+		// Flasgs para vetores 
+		Map<String,String> vectorLengthDeclr = new HashMap<String,String>(); // mapa de vetores dinamicos em seus tamanhos declarados
+		Integer vectorLenghVerified = 0; // lido em cada termo da expressão interna do vetor 
+		private boolean vectorStatic = false;  // se for estatico -> uma expr , cc joga outra
+		private String __temp = "";
+	 	
 		private String _exprLOGICContent;
 
 		private ArrayList<AbstractCommand> listaTrue;

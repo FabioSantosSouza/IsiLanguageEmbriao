@@ -1,9 +1,9 @@
 programa
 
-  []numero a;
-  []numero k;
-  []texto b;
-  []logico temp;
+  [4]numero a;
+  [10]numero k;
+  [3]texto b;
+  [3]logico temp;
   
   temp . = { Verdadeiro, Falso, Verdadeiro}; 
   a .= { 1, 2 ,3 , 4 };

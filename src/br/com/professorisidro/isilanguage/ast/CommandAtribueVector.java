@@ -34,3 +34,8 @@ public class CommandAtribueVector extends AbstractCommand{
 	
 
 }
+
+
+
+// [] TYPE ID ; -> ONDE ELEA VAI ? 
+

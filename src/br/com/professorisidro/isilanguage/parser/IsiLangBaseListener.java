@@ -15,6 +15,8 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+	import java.util.HashMap;
+	import java.util.Map;
 
 	import java.util.ArrayList;
 	import java.util.Stack;
@@ -71,13 +73,25 @@ public class IsiLangBaseListener implements IsiLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaraVector(IsiLangParser.DeclaraVectorContext ctx) { }
+	@Override public void enterDeclaraVectorStatic(IsiLangParser.DeclaraVectorStaticContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaraVector(IsiLangParser.DeclaraVectorContext ctx) { }
+	@Override public void exitDeclaraVectorStatic(IsiLangParser.DeclaraVectorStaticContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclaraVectorDynamic(IsiLangParser.DeclaraVectorDynamicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclaraVectorDynamic(IsiLangParser.DeclaraVectorDynamicContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -44,9 +44,9 @@ Projeto-Compiladores:
       [+] atribuição parcial  ( só use number )
       [+] acessar valor pelo indice ( usando number e usando id ) 
 
-
-      [] erros de tipo para vector  ID = 10; error ID = {} , error ID = {verdadeiro} , id[INDEX] = tipo inexperado;
+      [+] declaração de vetor dinamico 
+      [+] erros de tipo para vector  ID = 10; error ID = {} , error ID = {verdadeiro} , id[INDEX] = tipo inexperado;
+      [+] erro para o vetor dinamico ( atribuição de um vetor de tamanho diferente)
       [] Rever as mensagems de erros
-
 
 w  

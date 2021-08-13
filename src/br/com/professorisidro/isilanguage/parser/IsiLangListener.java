@@ -15,6 +15,8 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+	import java.util.HashMap;
+	import java.util.Map;
 
 	import java.util.ArrayList;
 	import java.util.Stack;
@@ -57,15 +59,25 @@ public interface IsiLangListener extends ParseTreeListener {
 	 */
 	void exitDeclaravar(IsiLangParser.DeclaravarContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link IsiLangParser#declaraVector}.
+	 * Enter a parse tree produced by {@link IsiLangParser#declaraVectorStatic}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaraVector(IsiLangParser.DeclaraVectorContext ctx);
+	void enterDeclaraVectorStatic(IsiLangParser.DeclaraVectorStaticContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link IsiLangParser#declaraVector}.
+	 * Exit a parse tree produced by {@link IsiLangParser#declaraVectorStatic}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaraVector(IsiLangParser.DeclaraVectorContext ctx);
+	void exitDeclaraVectorStatic(IsiLangParser.DeclaraVectorStaticContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#declaraVectorDynamic}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaraVectorDynamic(IsiLangParser.DeclaraVectorDynamicContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#declaraVectorDynamic}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaraVectorDynamic(IsiLangParser.DeclaraVectorDynamicContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#tipo}.
 	 * @param ctx the parse tree
