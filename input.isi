@@ -1,6 +1,7 @@
 programa
 
   []numero a;
+  []numero k;
   []texto b;
   []logico temp;
   numero doze;
@@ -16,6 +17,7 @@ programa
   dez = a[3]; // passou 
 
   temp[p] = Falso;
+  
 
   para( iterador = 0; iterador < 3; iterador= iterador+1 ){
     temp[iterador] = Falso; // DEBUG

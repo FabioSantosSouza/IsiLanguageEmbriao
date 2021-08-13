@@ -46,7 +46,7 @@ Projeto-Compiladores:
 
 
       [] erros de tipo para vector  ID = 10; error ID = {} , error ID = {verdadeiro} , id[INDEX] = tipo inexperado;
-    [] Rever as mensagems de erros
+      [] Rever as mensagems de erros
 
 
 w  

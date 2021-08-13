@@ -112,6 +112,7 @@ public class IsiLangLexer extends Lexer {
 		private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();
 		private String _readID;
 		private String _writeID;
+		private String _debug;
 		private int _exprType = -1; // tipo da expressão que foi avaliada
 		private String _exprID;
 		private String _exprContent;

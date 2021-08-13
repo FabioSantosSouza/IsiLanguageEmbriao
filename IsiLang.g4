@@ -31,6 +31,7 @@ grammar IsiLang;
 	private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();
 	private String _readID;
 	private String _writeID;
+	private String _debug;
 	private int _exprType = -1; // tipo da expressão que foi avaliada
 	private String _exprID;
 	private String _exprContent;
@@ -260,7 +261,9 @@ attribVector	: ID {
                		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
                		currentVar.setValue("value");
                		symbolTable.add(currentVar); 
-
+					if ( _tipo != currentVar.getType()-3 ){
+               	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+               	 	}
 
                }
 			   SC 
@@ -276,7 +279,9 @@ attribVectorAtIndex	:
 				ID 
 				{	// ID [expr] = value; 
 					verificaID(_input.LT(-1).getText());  
-                	_exprID = _input.LT(-1).getText(); 
+                	_exprID = _input.LT(-1).getText();
+                	IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               		currentVar.setValue("value"); 
                 }
 
                OB { _exprID+= "[ (int)"; } expr { _exprID += _exprContent;} CB { _exprID+="]";}    
@@ -285,6 +290,11 @@ attribVectorAtIndex	:
 			 ( expr | logicexpr)
 			 SC 
 			 	{ 
+					if ( _exprType != currentVar.getType()-3 ){
+               	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_exprType] +"\n");
+               	 	}
+               	 		
+				 	
 				 	CommandAtribuicao cmd;
 					if ( _exprContent == "") { 
 						cmd = new CommandAtribuicao(_exprID,_exprLOGICContent.trim());
@@ -305,14 +315,23 @@ vectorAtrExpr : termoVector ( VIR { _exprVectorContent += ",";} termoVector)*;
 
 
 termoVector		: 
-              NUMBER
+              FCH
+			  {
+			  	_debug =_input.LT(-1).getText();
+			  	
+			  	 
+			  	 if( _debug == _debug){
+			  		throw new IsiSemanticException("Syntax error at variable named "+_exprID+"\n");
+			  	 }
+			  }              
+              	| NUMBER
               {	
               	_exprVectorContent += _input.LT(-1).getText();
 				_tipo = IsiVariable.NUMBER; 
               }
             	| TEXT 
               { 
-				  _tipo = IsiVariable.NUMBER;	
+				  _tipo = IsiVariable.TEXT;	
 				  _exprVectorContent += _input.LT(-1).getText();
               }
 			  | LOGIC 
@@ -320,6 +339,7 @@ termoVector		:
 				  _tipo = IsiVariable.LOGIC;	
 				  _exprVectorContent += _input.LT(-1).getText(); 
 			  }
+			  
 			;
 			
 cmdselecao  :  'se' AP
