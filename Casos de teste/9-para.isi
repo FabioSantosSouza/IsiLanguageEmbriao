@@ -1,14 +1,24 @@
 programa
 
-  numero a,b;
+  numero a,b,c;
  
   a = 5;
-  
+    
   para(b = 0; b < a; b = b+1){
       escreva(b);
   }
   
+  para(b = 0; b < a; b = b+2){
+      para(c = 0; c < b; c = c+1){
+        escreva(c);
+  	  }
+      escreva(b);
+  }  
   
+  c = 1;
   
+  para(b = 0; c+b < a; b = b+1){
+      escreva(b);
+  }
 
 fimprog;

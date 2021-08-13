@@ -1,35 +1,35 @@
 programa
 
-  numero a, b, c, d, e ,f;
-  texto  t1,t2;
-  //Comentário em linha 
+  []numero a;
+  []numero k;
+  []texto b;
+  []logico temp;
+  numero doze;
+  numero dez,iterador,p;
+
   
+  p = 1;
+  temp . = { Verdadeiro, Falso, Verdadeiro}; 
+  a .= { 1, 2 ,3 , 4 };
+  b .= {"ABELHA","AMORA","sadas"};
+  a[1] = 10; // debug runfoiu
+
+  dez = a[3]; // passou 
+
+  temp[p] = Falso;
   
-  t1 = "alo"; // comentário em linha java-like 
-  
-  a = 2;
-  
-  /* 
-  	Comentário
-  	em 
-  	Bloco
-  */
-  
-  a = 15;
-  b = 3;
-  t1 = "LL";  
-  escreva(t1);
-  enquanto (a > b){
-    escreva(a);
- 	  a = a - b;
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    temp[iterador] = Falso; // DEBUG
   }
- 
-  a = 5;
-  para(b = 0; b < a; b = b+1){
-  	escreva(b);
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(a[iterador]);
   }
-  escreva(a);
-  
-  
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(temp[iterador]);
+  }
+
 
 fimprog;

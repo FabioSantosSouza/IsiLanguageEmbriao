@@ -1,16 +1,28 @@
 programa
 
-  numero a,b;
- 
+  numero a,b,c;
+  logico temp;
   a = 15;
   b = 3;
+  c = b;
+  temp = Verdadeiro;
   
-  enquanto(b<a){
-      escreva(b);
-      b = b + 1;
+  enquanto(b+c<a){
+  	enquanto(c<a-b){
+  		escreva(c);
+  		c = c + 1;
+  	}
+    escreva(b);
+    b = b + 2;
   }
   
+  enquanto(temp){
+  	escreva("V");
+  }
   
+  enquanto(Verdadeiro){
+	escreva("True");  
+  }
   
 
 fimprog;

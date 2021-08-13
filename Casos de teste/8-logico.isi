@@ -2,5 +2,6 @@ programa
 
   logico teste;  
   teste = Falso || Verdadeiro && Falso ;
+  escreva(teste);
 
 fimprog;

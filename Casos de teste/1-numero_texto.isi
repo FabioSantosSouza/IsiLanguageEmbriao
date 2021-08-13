@@ -6,6 +6,12 @@ programa
   a = 10;
   b = "Teste texto";
   
+  //Erros
+  a = "Teste texto";
+  b = "10";
+  
+  
+  
   escreva(a);
   escreva(b);
   

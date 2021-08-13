@@ -1285,7 +1285,13 @@ public class IsiLangParser extends Parser {
 				match(NUMBER);
 					
 				              	_exprVectorContent += _input.LT(-1).getText();
-								_tipo = IsiVariable.NUMBER; 
+								_tipo = IsiVariable.NUMBER;
+								IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+				               	 currentVar.setValue("value");
+				               	 symbolTable.add(currentVar);
+								if ( _tipo != currentVar.getType()-3 ){
+				               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+				               	 } 
 				              
 				}
 				break;
@@ -1297,6 +1303,12 @@ public class IsiLangParser extends Parser {
 				 
 								  _tipo = IsiVariable.TEXT;	
 								  _exprVectorContent += _input.LT(-1).getText();
+								  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+				               	 currentVar.setValue("value");
+				               	 symbolTable.add(currentVar);
+								 if ( _tipo != currentVar.getType()-3 ){
+				               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+				               	 }
 				              
 				}
 				break;
@@ -1307,7 +1319,13 @@ public class IsiLangParser extends Parser {
 				match(LOGIC);
 				 
 								  _tipo = IsiVariable.LOGIC;	
-								  _exprVectorContent += _input.LT(-1).getText(); 
+								  _exprVectorContent += _input.LT(-1).getText();
+								  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+				               	 currentVar.setValue("value");
+				               	 symbolTable.add(currentVar);
+								 if ( _tipo != currentVar.getType()-3 ){
+				               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+				               	 } 
 							  
 				}
 				break;
@@ -1468,11 +1486,13 @@ public class IsiLangParser extends Parser {
 	}
 
 	public static class CondseContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(IsiLangParser.ID, 0); }
-		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
 		public CondseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1494,8 +1514,8 @@ public class IsiLangParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(229);
-			match(ID);
-			_exprDecision = _input.LT(-1).getText(); 
+			expr();
+			_exprDecision = _exprContent; 
 			setState(231);
 			match(OPREL);
 			_exprDecision += _input.LT(-1).getText(); 
@@ -1619,11 +1639,13 @@ public class IsiLangParser extends Parser {
 	}
 
 	public static class CondWhileContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(IsiLangParser.ID, 0); }
-		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
 		public CondWhileContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1645,8 +1667,8 @@ public class IsiLangParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(257);
-			match(ID);
-			_exprWhile = _input.LT(-1).getText(); 
+			expr();
+			_exprWhile = _exprContent; 
 			setState(259);
 			match(OPREL);
 			_exprWhile += _input.LT(-1).getText(); 
@@ -1967,11 +1989,13 @@ public class IsiLangParser extends Parser {
 	}
 
 	public static class CondForContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(IsiLangParser.ID, 0); }
-		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OPREL() { return getToken(IsiLangParser.OPREL, 0); }
 		public CondForContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1993,8 +2017,8 @@ public class IsiLangParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(317);
-			match(ID);
-			_exprForB = _input.LT(-1).getText(); 
+			expr();
+			_exprForB = _exprContent; 
 			setState(319);
 			match(OPREL);
 			_exprForB += _input.LT(-1).getText(); 
@@ -2477,7 +2501,7 @@ public class IsiLangParser extends Parser {
 		"\u00db\3\2\2\2\u00dd\u00de\3\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2"+
 		"\2\2\u00df\u00e0\3\2\2\2\u00e0\u00e1\7\26\2\2\u00e1\u00e2\b\21\1\2\u00e2"+
 		"\u00e4\3\2\2\2\u00e3\u00d8\3\2\2\2\u00e3\u00e4\3\2\2\2\u00e4\u00e5\3\2"+
-		"\2\2\u00e5\u00e6\b\21\1\2\u00e6!\3\2\2\2\u00e7\u00e8\7\32\2\2\u00e8\u00e9"+
+		"\2\2\u00e5\u00e6\b\21\1\2\u00e6!\3\2\2\2\u00e7\u00e8\5\62\32\2\u00e8\u00e9"+
 		"\b\22\1\2\u00e9\u00ea\7\31\2\2\u00ea\u00eb\b\22\1\2\u00eb\u00ec\5\62\32"+
 		"\2\u00ec\u00ed\b\22\1\2\u00ed\u00ee\b\22\1\2\u00ee#\3\2\2\2\u00ef\u00f0"+
 		"\7\f\2\2\u00f0\u00f1\7\17\2\2\u00f1\u00f6\b\23\1\2\u00f2\u00f7\5&\24\2"+
@@ -2486,8 +2510,8 @@ public class IsiLangParser extends Parser {
 		"\2\2\u00f9\u00fa\7\25\2\2\u00fa\u00fc\b\23\1\2\u00fb\u00fd\5\16\b\2\u00fc"+
 		"\u00fb\3\2\2\2\u00fd\u00fe\3\2\2\2\u00fe\u00fc\3\2\2\2\u00fe\u00ff\3\2"+
 		"\2\2\u00ff\u0100\3\2\2\2\u0100\u0101\7\26\2\2\u0101\u0102\b\23\1\2\u0102"+
-		"%\3\2\2\2\u0103\u0104\7\32\2\2\u0104\u0105\b\24\1\2\u0105\u0106\7\31\2"+
-		"\2\u0106\u0107\b\24\1\2\u0107\u0108\5\62\32\2\u0108\u0109\b\24\1\2\u0109"+
+		"%\3\2\2\2\u0103\u0104\5\62\32\2\u0104\u0105\b\24\1\2\u0105\u0106\7\31"+
+		"\2\2\u0106\u0107\b\24\1\2\u0107\u0108\5\62\32\2\u0108\u0109\b\24\1\2\u0109"+
 		"\u010a\b\24\1\2\u010a\'\3\2\2\2\u010b\u010c\7\r\2\2\u010c\u010d\b\25\1"+
 		"\2\u010d\u010e\7\25\2\2\u010e\u0110\b\25\1\2\u010f\u0111\5\16\b\2\u0110"+
 		"\u010f\3\2\2\2\u0111\u0112\3\2\2\2\u0112\u0110\3\2\2\2\u0112\u0113\3\2"+
@@ -2504,7 +2528,7 @@ public class IsiLangParser extends Parser {
 		"\u0136\5\16\b\2\u0135\u0134\3\2\2\2\u0136\u0137\3\2\2\2\u0137\u0135\3"+
 		"\2\2\2\u0137\u0138\3\2\2\2\u0138\u0139\3\2\2\2\u0139\u013a\7\26\2\2\u013a"+
 		"\u013b\b\27\1\2\u013b-\3\2\2\2\u013c\u013d\5\26\f\2\u013d\u013e\b\30\1"+
-		"\2\u013e/\3\2\2\2\u013f\u0140\7\32\2\2\u0140\u0141\b\31\1\2\u0141\u0142"+
+		"\2\u013e/\3\2\2\2\u013f\u0140\5\62\32\2\u0140\u0141\b\31\1\2\u0141\u0142"+
 		"\7\31\2\2\u0142\u0143\b\31\1\2\u0143\u0144\5\62\32\2\u0144\u0145\b\31"+
 		"\1\2\u0145\u0146\b\31\1\2\u0146\61\3\2\2\2\u0147\u0151\b\32\1\2\u0148"+
 		"\u0152\58\35\2\u0149\u014a\7\32\2\2\u014a\u014b\b\32\1\2\u014b\u014c\7"+

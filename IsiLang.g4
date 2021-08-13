@@ -314,7 +314,7 @@ attribVectorAtIndex	:
 vectorAtrExpr : termoVector ( VIR { _exprVectorContent += ",";} termoVector)*;
 
 
-termoVector		: 
+termoVector		:
               FCH
 			  {
 			  	_debug =_input.LT(-1).getText();
@@ -327,17 +327,35 @@ termoVector		:
               	| NUMBER
               {	
               	_exprVectorContent += _input.LT(-1).getText();
-				_tipo = IsiVariable.NUMBER; 
+				_tipo = IsiVariable.NUMBER;
+				IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               	 currentVar.setValue("value");
+               	 symbolTable.add(currentVar);
+				if ( _tipo != currentVar.getType()-3 ){
+               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+               	 } 
               }
             	| TEXT 
               { 
 				  _tipo = IsiVariable.TEXT;	
 				  _exprVectorContent += _input.LT(-1).getText();
+				  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               	 currentVar.setValue("value");
+               	 symbolTable.add(currentVar);
+				 if ( _tipo != currentVar.getType()-3 ){
+               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+               	 }
               }
 			  | LOGIC 
               { 
 				  _tipo = IsiVariable.LOGIC;	
-				  _exprVectorContent += _input.LT(-1).getText(); 
+				  _exprVectorContent += _input.LT(-1).getText();
+				  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               	 currentVar.setValue("value");
+               	 symbolTable.add(currentVar);
+				 if ( _tipo != currentVar.getType()-3 ){
+               		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
+               	 } 
 			  }
 			  
 			;
@@ -372,7 +390,7 @@ cmdselecao  :  'se' AP
                    }
             ;
 
-condse	:	ID    {_exprDecision = _input.LT(-1).getText(); }
+condse	:	expr    {_exprDecision = _exprContent; }
 			OPREL {_exprDecision += _input.LT(-1).getText(); } 
 			expr {_exprDecision += _exprContent;}
 			{ifStatements.push(_exprDecision);
@@ -397,7 +415,7 @@ cmdrepeticao  :  'enquanto' AP{_exprLOGICContent = ""; _exprWhile = "";}
 		                    } 	
 		    ; 
 		    
-condWhile:	ID    {_exprWhile = _input.LT(-1).getText(); }
+condWhile:	expr    {_exprWhile = _exprContent; }
 			OPREL {_exprWhile += _input.LT(-1).getText(); } 
 			expr {_exprWhile += _exprContent;}
 			{whileStatements.push(_exprWhile);}
@@ -453,7 +471,7 @@ attrFor:	attrib
 			{forStatements.push(_exprID+"="+_exprContent);}
 	;
 	
-condFor:	ID    {_exprForB = _input.LT(-1).getText(); }
+condFor:	expr    {_exprForB = _exprContent; }
 			OPREL {_exprForB += _input.LT(-1).getText(); } 
 			expr {_exprForB += _exprContent;}
 			{forStatements.push(_exprForB);}

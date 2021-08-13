@@ -1,0 +1,7 @@
+programa
+
+  logico a;
+  a = 2;
+  
+
+fimprog;

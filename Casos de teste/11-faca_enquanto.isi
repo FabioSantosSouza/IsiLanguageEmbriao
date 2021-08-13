@@ -1,14 +1,17 @@
 programa
 
-  numero a,b;
+  numero a,b,c;
  
   a = 15;
   b = 3;
-  
+  c = 0;
   faca{
     escreva(b);
-    b = b + 1;
-  }enquanto(b<a){
+    b = b + 2;
+    faca{
+      c = c + 1;
+    }enquanto(c < b);
+  }enquanto(b<a);
   
   
   

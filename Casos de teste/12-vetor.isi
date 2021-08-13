@@ -1,3 +1,34 @@
 programa
 
+  []numero a;
+  []numero k;
+  []texto b;
+  []logico temp;
+  numero dez,iterador,p;
+
+  
+  p = 1;
+  temp . = { Verdadeiro, Falso, Verdadeiro}; 
+  a .= { 1, 2 ,3 , 4 };
+  b .= {"ABELHA","AMORA","SARNA"};
+  a[1] = 10; // debug runfoiu
+
+  dez = a[3]; // passou 
+
+  temp[p] = Falso;
+  
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    temp[iterador] = Falso; // DEBUG
+  }
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(a[iterador]);
+  }
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(temp[iterador]);
+  }
+
+
 fimprog;

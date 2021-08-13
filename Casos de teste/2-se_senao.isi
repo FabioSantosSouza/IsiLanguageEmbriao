@@ -2,16 +2,30 @@ programa
 
   numero a,b;
   
-  leia(a);
-  leia(b);
+  a = 10;
+  b = 5;
 
+  se(a < 15){
+  	escreva("15");
+  }
+  
   se (a > b){
     escreva(a);
   }senao{
     escreva(b);
   }
   
+  se(a < 15){
+  	se(b < 7){
+  		escreva("15 e 7");
+  	}senao{
+  		escreva("15");
+  	}
+  }
   
+  se(a + b < 10 + 5){
+  	escreva("menor que 15");
+  }
   
 
 fimprog;
