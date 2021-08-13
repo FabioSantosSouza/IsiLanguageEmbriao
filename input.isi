@@ -1,53 +1,33 @@
 programa
 
-  numero a, b,c,d,e;
-  logico teste;
-  teste = Verdadeiro;
-  a = 10;
-  b = 0;
-  c = 0;
+  []numero a;
+  []texto b;
+  []logico temp;
+  numero doze;
+  numero dez,iterador,p;
+
   
-  se(a>10){
-  	escreva(Verdadeiro);
-  	escreva(5);
-  	escreva("6");
+  p = 1;
+  temp . = { Verdadeiro, Falso, Verdadeiro}; 
+  a .= { 1, 2 ,3 , 4 };
+  b .= {"ABELHA","AMORA","sadas"};
+  a[1] = 10; // debug runfoiu
+
+  dez = a[3]; // passou 
+
+  temp[p] = Falso;
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    temp[iterador] = Falso; // DEBUG
   }
-  
-  
-  
-  se(a > b+15){
-  	se(b>5){
-  		escreva(b);
-  	}senao{
-  		escreva(b);
-  	}
-  	escreva(a);
-  }senao{
-  	escreva(teste);
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(a[iterador]);
   }
-  
-  se(a>10){
-  	escreva(c);
+
+  para( iterador = 0; iterador < 3; iterador= iterador+1 ){
+    escreva(temp[iterador]);
   }
-  
-  enquanto(b < a+3){
-    escreva(b);
-    b = b + 1;
-    d = a*b;
-    enquanto(c < d-2){
-      escreva(c);
-      c = c + b; 
-    }
-  }
-  
-  enquanto(!teste){
-    escreva(teste);
-  }
-  
-  para(e = 0; e < a+2; e = e + 2){
-    escreva(e);
-    para(c = 0; c < e+3; c = c + 1){
-      escreva(c);
-    }
-  }
+
+
 fimprog;

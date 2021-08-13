@@ -10,16 +10,18 @@ grammar IsiLang;
 	import br.com.professorisidro.isilanguage.ast.CommandLeitura;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
+	import br.com.professorisidro.isilanguage.ast.CommandAtribueVector;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+
 	import java.util.ArrayList;
 	import java.util.Stack;
 }
 
 @members{
-	private int _tipo;
+	private int _tipo =-1;
 	private String _varName;
 	private String _varValue;
 	private IsiSymbolTable symbolTable = new IsiSymbolTable();
@@ -41,6 +43,9 @@ grammar IsiLang;
 	private Stack<String> whileStatements = new Stack<String>();
 	private Stack<String> forStatements = new Stack<String>();
 	private Stack<String> dowhileStatements = new Stack<String>();
+	private String _exprVectorContent;
+
+
 	
 	private String _exprLOGICContent;
 
@@ -50,7 +55,7 @@ grammar IsiLang;
 	private ArrayList<AbstractCommand> listaFor; 
 	private ArrayList<AbstractCommand> listaDoWhile; 
 	
-	private static final String[] TYPPES = {"NUMERO","TEXTO","LOGICO"};
+	private static final String[] TYPPES = {"NUMERO","TEXTO","LOGICO", "VECTOR_NUMBER", "VECTOR_TEXTO", "VECTOR_LOGICO"};
 	
 	
 	public void verificaID(String id){
@@ -103,7 +108,7 @@ prog	: 'programa' decl bloco 'fimprog;'
            } 
 		;
 		
-decl    :  (declaravar)+
+decl    :  (declaravar | declaraVector )+
         ;
         
         
@@ -130,14 +135,29 @@ declaravar :  tipo ID  {
 	                  	 throw new IsiSemanticException("Symbol "+_varName+" already declared");
 	                  }
                     }
-              )* 
-               SC
+              )* SC
+           ;
+
+declaraVector : OB CB tipo ID {
+					  _varName = _input.LT(-1).getText();
+	                  _varValue = null; 
+	                  symbol = new IsiVariable(_varName, _tipo + 3, _varValue);
+	                  if (!symbolTable.exists(_varName)){
+	                     symbolTable.add(symbol);	
+	                  }
+	                  else{
+	                  	 throw new IsiSemanticException("Symbol "+_varName+" already declared");
+	                  }
+                    } SC 
            ;
            
-tipo       : 'numero' { _tipo = IsiVariable.NUMBER;  }
-           | 'texto'  { _tipo = IsiVariable.TEXT;  }
-           | 'logico'  { _tipo = IsiVariable.LOGIC;  }
-           ;
+tipo       : 'numero' { _tipo = IsiVariable.NUMBER; // 0 
+						_exprVectorContent += _input.LT(-1).getText();  }
+           | 'texto'  { _tipo = IsiVariable.TEXT; // 1 
+		              _exprVectorContent += _input.LT(-1).getText(); }
+           | 'logico'  { _tipo = IsiVariable.LOGIC; // 2
+		   				 _exprVectorContent += _input.LT(-1).getText();  }
+			;
         
 bloco	: { 
 			curThread = new ArrayList<AbstractCommand>(); 
@@ -154,6 +174,8 @@ cmd		:  cmdleitura
 		|  cmdrepeticao
 		|  cmdfacaenquanto
 		|  cmdpara
+		|  attribVector
+		|  attribVectorAtIndex
 		;
 		
 cmdleitura	: 'leia' AP
@@ -205,12 +227,12 @@ attrib	:	ID { verificaID(_input.LT(-1).getText());
                     
                     _exprID = _input.LT(-1).getText();
                    } 
-               ATTR { _exprContent = ""; _exprLOGICContent = "";} 
+                ATTR { _exprContent = ""; _exprLOGICContent = "";}
                
                (expr | logicexpr) 
                { 	
                		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
-               		currentVar.setValue("debug");
+               		currentVar.setValue("value");
                		symbolTable.add(currentVar); 
 
                		if ( _exprType != currentVar.getType() ){
@@ -219,6 +241,86 @@ attrib	:	ID { verificaID(_input.LT(-1).getText());
 
                }
 		;
+
+
+
+
+attribVector	: ID {
+					verificaID(_input.LT(-1).getText());  
+                    _exprID = _input.LT(-1).getText(); 
+                   } 
+               DALE ATTR { _exprVectorContent = "";}    
+
+			   ACH { _exprVectorContent += "{";}
+
+			   vectorAtrExpr
+
+			   FCH { _exprVectorContent += "}";}
+               { 	
+               		IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
+               		currentVar.setValue("value");
+               		symbolTable.add(currentVar); 
+
+
+               }
+			   SC 
+               { 
+				   CommandAtribueVector cmd;
+				   cmd = new CommandAtribueVector(_exprID, _exprVectorContent, currentVar.getType() );
+               	 
+               	 stack.peek().add(cmd);
+               } 
+		;
+
+attribVectorAtIndex	: 
+				ID 
+				{	// ID [expr] = value; 
+					verificaID(_input.LT(-1).getText());  
+                	_exprID = _input.LT(-1).getText(); 
+                }
+
+               OB { _exprID+= "[ (int)"; } expr { _exprID += _exprContent;} CB { _exprID+="]";}    
+
+			 ATTR { _exprContent = ""; _exprLOGICContent= "";} 
+			 ( expr | logicexpr)
+			 SC 
+			 	{ 
+				 	CommandAtribuicao cmd;
+					if ( _exprContent == "") { 
+						cmd = new CommandAtribuicao(_exprID,_exprLOGICContent.trim());
+					}
+					else {  
+						cmd = new CommandAtribuicao(_exprID, _exprContent.trim());
+					 }
+					
+					stack.peek().add(cmd);
+			   };
+			
+
+
+
+
+
+vectorAtrExpr : termoVector ( VIR { _exprVectorContent += ",";} termoVector)*;
+
+
+termoVector		: 
+              NUMBER
+              {	
+              	_exprVectorContent += _input.LT(-1).getText();
+				_tipo = IsiVariable.NUMBER; 
+              }
+            	| TEXT 
+              { 
+				  _tipo = IsiVariable.NUMBER;	
+				  _exprVectorContent += _input.LT(-1).getText();
+              }
+			  | LOGIC 
+              { 
+				  _tipo = IsiVariable.LOGIC;	
+				  _exprVectorContent += _input.LT(-1).getText(); 
+			  }
+			;
 			
 cmdselecao  :  'se' AP
 					(condse | logicexpr {ifStatements.push(_exprLOGICContent);})
@@ -337,12 +439,23 @@ condFor:	ID    {_exprForB = _input.LT(-1).getText(); }
 			{forStatements.push(_exprForB);}
 	;
 
+expr		:  {_exprContent = "";}  
 
-expr		:  {_exprContent = "";}
-				termo ( 
-	             OP { _exprContent += _input.LT(-1).getText();}
-	            termo
-	            )* { _exprMOL= true;}
+				(termo | ID { _exprContent += _input.LT(-1).getText();} 
+						 OB { _exprContent += _input.LT(-1).getText();  _exprContent += "(int)";} 
+						 (NUMBER | ID)  { _exprContent += _input.LT(-1).getText();} 
+						 CB { _exprContent += _input.LT(-1).getText();} )   
+						 
+				( 
+	             
+				 OP { _exprContent += _input.LT(-1).getText();}
+	            (termo | ID { _exprContent += _input.LT(-1).getText();} 
+						 OB { _exprContent += _input.LT(-1).getText();  _exprContent += "(int)";} 
+						 (NUMBER | ID)  { _exprContent += _input.LT(-1).getText();} 
+						 CB { _exprContent += _input.LT(-1).getText();} )
+	            
+				
+				)* { _exprMOL= true;}
 	            
 			;
 logicexpr :  logicterm { _exprMOL = false;} ( BIN_OP_LOGIC { _exprLOGICContent += _input.LT(-1).getText(); } 
@@ -422,7 +535,10 @@ ACH  : '{'
      
 FCH  : '}'
      ;
-	 
+
+OB : '[' ; // open brackets 
+
+CB : ']' ;  // close 
 	 
 OPREL : '>' | '<' | '>=' | '<=' | '==' | '!='
       ;
@@ -432,7 +548,6 @@ ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 	
 NUMBER	: [0-9]+ ('.' [0-9]+)?
 		;
-		
 ASPAS : '"'
       ; 
 
@@ -441,10 +556,12 @@ TEXT : ASPAS (~'"')* ASPAS
 
 LOGIC : 'Verdadeiro' | 'Falso' ;
 
+
 	
 BIN_OP_LOGIC	: '&&' | '||' ;
 
 UNIT_OP_LOGIC : '!' ; 
+
 
 WS	: (' ' | '\t' | '\n' | '\r') -> skip;
 
@@ -454,3 +571,6 @@ COMMENT
 LINE_COMMENT
 : '//' ~[\r\n]* -> skip
 ;
+
+
+DALE : '.';

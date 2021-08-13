@@ -5,6 +5,9 @@ public class IsiVariable extends IsiSymbol {
 	public static final int NUMBER=0;
 	public static final int TEXT  =1;
 	public static final int LOGIC =2;
+	public static final int V_NUMBER =3;
+	public static final int V_TEXT = 4;
+	public static final int V_LOGIC =5;
 	
 	private int type;
 	private String value;
@@ -43,10 +46,17 @@ public class IsiVariable extends IsiSymbol {
        }
        else if ( type == TEXT) {
     	   str = "String ";
-       } else {
-    	   str = "boolean";
-       }
-       
+       } 
+	   else if ( type == LOGIC) {
+		str = "boolean ";
+	   } 
+	   else if ( type == V_LOGIC) {
+		str = "boolean[] ";
+	   } else if ( type == V_NUMBER) {
+		str = "double[] ";
+	   } else  {
+		str = "String[] ";
+	   }
        return str + " "+super.name+";";
 	}
 	

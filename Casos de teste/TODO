@@ -21,18 +21,32 @@ Projeto-Compiladores:
   items-Opcionais:
     [+]  mais tipos de dados LOGIC VECTOR
     [+]  mais estruturas de repetições ( while do-while for )
-    []  trabalhar com vetores/matrizes // declaração e na atribuição
+    [+]  trabalhar com vetores/matrizes // declaração e na atribuição
     [-]  criar um runtime (um interpretador), além de gerar código destino
-    []  outras opções a seu critério (especifique) 
+    [+]  outras opções a seu critério (especifique) 
     [+] implementar comentários no código, é bem simples a nível léxico 
   
 
   hoje : 
     [+] Arrumar as expr para logic types 
-    [] lações trabalhando com logic types 
+    [+] lações trabalhando com logic types 
     [+] arummar os erros e avisos 
-    [] BUG var block
-    [] tipo vetor, declaração, atribuição vetor, atribuição em indice
+    [-] BUG var block
+    [+] tipo vetor, declaração, atribuição vetor, atribuição em indice
 
   amanha :
-    [] logic && (b< 10)  ??
+    [-] logic && (b< 10)  ??
+  
+
+    vector :
+      [+] declaração regra -> [] tipo ID ;
+      [+] atribuição total = ID = { vectorExpr }; 
+      [+] atribuição parcial  ( só use number )
+      [+] acessar valor pelo indice ( usando number e usando id ) 
+
+
+      [] erros de tipo para vector  ID = 10; error ID = {} , error ID = {verdadeiro} , id[INDEX] = tipo inexperado;
+    [] Rever as mensagems de erros
+
+
+w  

@@ -10,10 +10,12 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandLeitura;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
+	import br.com.professorisidro.isilanguage.ast.CommandAtribueVector;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -54,6 +56,16 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDeclaravar(IsiLangParser.DeclaravarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#declaraVector}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaraVector(IsiLangParser.DeclaraVectorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#declaraVector}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaraVector(IsiLangParser.DeclaraVectorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#tipo}.
 	 * @param ctx the parse tree
@@ -124,6 +136,46 @@ public interface IsiLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAttrib(IsiLangParser.AttribContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#attribVector}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttribVector(IsiLangParser.AttribVectorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#attribVector}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttribVector(IsiLangParser.AttribVectorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#attribVectorAtIndex}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttribVectorAtIndex(IsiLangParser.AttribVectorAtIndexContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#attribVectorAtIndex}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttribVectorAtIndex(IsiLangParser.AttribVectorAtIndexContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#vectorAtrExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterVectorAtrExpr(IsiLangParser.VectorAtrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#vectorAtrExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitVectorAtrExpr(IsiLangParser.VectorAtrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLangParser#termoVector}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermoVector(IsiLangParser.TermoVectorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLangParser#termoVector}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermoVector(IsiLangParser.TermoVectorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLangParser#cmdselecao}.
 	 * @param ctx the parse tree

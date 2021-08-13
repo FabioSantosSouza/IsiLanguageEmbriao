@@ -10,10 +10,12 @@ package br.com.professorisidro.isilanguage.parser;
 	import br.com.professorisidro.isilanguage.ast.CommandLeitura;
 	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
 	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
+	import br.com.professorisidro.isilanguage.ast.CommandAtribueVector;
 	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
 	import br.com.professorisidro.isilanguage.ast.CommandRepeticao;
 	import br.com.professorisidro.isilanguage.ast.CommandFacaEnquanto;
 	import br.com.professorisidro.isilanguage.ast.CommandPara;
+
 	import java.util.ArrayList;
 	import java.util.Stack;
 
@@ -64,6 +66,18 @@ public class IsiLangBaseListener implements IsiLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDeclaravar(IsiLangParser.DeclaravarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclaraVector(IsiLangParser.DeclaraVectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclaraVector(IsiLangParser.DeclaraVectorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -148,6 +162,54 @@ public class IsiLangBaseListener implements IsiLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAttrib(IsiLangParser.AttribContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAttribVector(IsiLangParser.AttribVectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAttribVector(IsiLangParser.AttribVectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAttribVectorAtIndex(IsiLangParser.AttribVectorAtIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAttribVectorAtIndex(IsiLangParser.AttribVectorAtIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVectorAtrExpr(IsiLangParser.VectorAtrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVectorAtrExpr(IsiLangParser.VectorAtrExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTermoVector(IsiLangParser.TermoVectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTermoVector(IsiLangParser.TermoVectorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
