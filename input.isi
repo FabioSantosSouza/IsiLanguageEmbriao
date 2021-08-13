@@ -1,19 +1,31 @@
 programa
 
-  [4]numero a;
-  [10]numero k;
-  [3]texto b;
-  [3]logico temp;
+  numero a,b;
   
-  temp . = { Verdadeiro, Falso, Verdadeiro}; 
-  a .= { 1, 2 ,3 , 4 };
-  b .= {"ABELHA","AMORA","SARNA"};
+  a = 10;
+  b = 5;
+
+  se(a < 15){
+  	escreva("15");
+  }
   
-  //Testes de tipos
+  se (a > b){
+    escreva(a);
+  }senao{
+    escreva(b);
+  }
   
-  //a[0] = "1";
-  //temp[0] = 1;
-  //b[0] = Falso;
-  //a .= {2,"2",3};
+  se(a < 15){
+  	se(b < 7){
+  		escreva("15 e 7");
+  	}senao{
+  		escreva("15");
+  	}
+  }
   
+  se(a + b < 10 + 5){
+  	escreva("menor que 15");
+  }
+  
+
 fimprog;

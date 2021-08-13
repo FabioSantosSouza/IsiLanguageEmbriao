@@ -1618,7 +1618,6 @@ public class IsiLangParser extends Parser {
 			_exprDecision += _exprContent;
 					
 			ifStatements.push(_exprDecision);
-						System.out.println(_exprDecision);
 			}
 		}
 		catch (RecognitionException re) {

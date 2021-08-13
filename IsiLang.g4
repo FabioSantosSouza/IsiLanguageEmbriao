@@ -364,8 +364,7 @@ cmdselecao:
 
 condse:
 	expr {_exprDecision = _exprContent; } OPREL {_exprDecision += _input.LT(-1).getText(); } expr {_exprDecision += _exprContent;
-		} {ifStatements.push(_exprDecision);
-			System.out.println(_exprDecision);};
+		} {ifStatements.push(_exprDecision);};
 
 cmdrepeticao:
 	'enquanto' AP {_exprLOGICContent = ""; _exprWhile = "";} (

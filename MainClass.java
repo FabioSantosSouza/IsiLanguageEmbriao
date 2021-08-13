@@ -2,11 +2,21 @@ import java.util.Scanner;
 public class MainClass{ 
   public static void main(String args[]){
        Scanner _key = new Scanner(System.in);
-double[]  a= new double[4];
-String[]  b= new String[3];
-boolean[]  temp= new boolean[3];
-double[]  k= new double[10];
-temp = new boolean[]{true,false,true};
-a = new double[]{1,2,3,4};
-b = new String[]{"ABELHA","AMORA","SARNA"};
+double  a;
+double  b;
+a = 10;
+b = 5;
+if (a<15) {
+System.out.println("15");}
+if (a>b) {
+System.out.println(a);}else {
+System.out.println(b);}
+
+if (a<15) {
+if (b<7) {
+System.out.println("15 e 7");}else {
+System.out.println("15");}
+}
+if (a+b<10+5) {
+System.out.println("menor que 15");}
   }}
