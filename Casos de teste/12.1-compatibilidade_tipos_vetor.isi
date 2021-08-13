@@ -1,13 +1,14 @@
 programa
 
-  []numero a;
+  [4]numero a;
   []numero k;
   []texto b;
-  []logico temp;
+  [3]logico temp;
   
+  b .= {"ABELHA","AMORA","SARNA"};
   temp . = { Verdadeiro, Falso, Verdadeiro}; 
   a .= { 1, 2 ,3 , 4 };
-  b .= {"ABELHA","AMORA","SARNA"};
+  
   
   //Testes de tipos
   

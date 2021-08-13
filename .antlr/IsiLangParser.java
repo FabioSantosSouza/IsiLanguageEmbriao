@@ -156,7 +156,6 @@ public class IsiLangParser extends Parser {
 		// Flasgs para vetores 
 		Map<String,String> vectorLengthDeclr = new HashMap<String,String>(); // mapa de vetores dinamicos em seus tamanhos declarados
 		Integer vectorLenghVerified = 0; // lido em cada termo da expressão interna do vetor 
-		private boolean vectorStatic = false;  // se for estatico -> uma expr , cc joga outra
 		private String __temp = "";
 	 	
 		private String _exprLOGICContent;
@@ -449,7 +448,7 @@ public class IsiLangParser extends Parser {
 			tipo();
 			setState(87);
 			match(ID);
-			    vectorStatic = true;
+
 								  _varName = _input.LT(-1).getText();
 				                  _varValue = null; 
 				                  symbol = new IsiVariable(_varName, _tipo + 3, _varValue);
@@ -508,7 +507,6 @@ public class IsiLangParser extends Parser {
 			setState(96);
 			match(ID);
 
-									vectorStatic = false;
 								  _varName = _input.LT(-1).getText();
 				                  _varValue = null; 
 				                  symbol = new IsiVariable(_varName, _tipo + 3, _varValue, __temp.trim());
@@ -1041,7 +1039,7 @@ public class IsiLangParser extends Parser {
 			               	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
 			               	 	}
 
-								if ( !vectorStatic ) { // se nao for statico 
+								if ( vectorLengthDeclr.get(_exprID) != null ) { 
 										String tamanhoDeclarado = vectorLengthDeclr.get(_exprID);
 										
 										if ( !vectorLenghVerified.toString().trim().equals(tamanhoDeclarado) ){
@@ -1259,7 +1257,7 @@ public class IsiLangParser extends Parser {
 				{
 				setState(201);
 				match(NUMBER);
-						if (!vectorStatic){  vectorLenghVerified++; }
+						if (vectorLengthDeclr.get(_exprID) != null ) {  vectorLenghVerified++; }
 				              	_exprVectorContent += _input.LT(-1).getText();
 								_tipo = IsiVariable.NUMBER;
 								IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
@@ -1276,7 +1274,7 @@ public class IsiLangParser extends Parser {
 				{
 				setState(203);
 				match(TEXT);
-				 		if (!vectorStatic){  vectorLenghVerified++; }
+				 		if ( vectorLengthDeclr.get(_exprID) != null ){  vectorLenghVerified++; }
 								  _tipo = IsiVariable.TEXT;	
 								  _exprVectorContent += _input.LT(-1).getText();
 								  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
@@ -1293,7 +1291,7 @@ public class IsiLangParser extends Parser {
 				{
 				setState(205);
 				match(LOGIC);
-				 		if (!vectorStatic){  vectorLenghVerified++; }
+				 		if (vectorLengthDeclr.get(_exprID) != null){  vectorLenghVerified++; }
 								  _tipo = IsiVariable.LOGIC;	
 								  _exprVectorContent += _input.LT(-1).getText();
 								  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
@@ -1484,7 +1482,6 @@ public class IsiLangParser extends Parser {
 			_exprDecision += _exprContent;
 					
 			ifStatements.push(_exprDecision);
-						System.out.println(_exprDecision);
 			}
 		}
 		catch (RecognitionException re) {

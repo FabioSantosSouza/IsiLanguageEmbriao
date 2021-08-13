@@ -141,7 +141,6 @@ public class IsiLangLexer extends Lexer {
 		// Flasgs para vetores 
 		Map<String,String> vectorLengthDeclr = new HashMap<String,String>(); // mapa de vetores dinamicos em seus tamanhos declarados
 		Integer vectorLenghVerified = 0; // lido em cada termo da expressão interna do vetor 
-		private boolean vectorStatic = false;  // se for estatico -> uma expr , cc joga outra
 		private String __temp = "";
 	 	
 		private String _exprLOGICContent;

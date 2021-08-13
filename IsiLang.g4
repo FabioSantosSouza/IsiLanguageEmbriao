@@ -51,7 +51,6 @@ grammar IsiLang;
 	// Flasgs para vetores 
 	Map<String,String> vectorLengthDeclr = new HashMap<String,String>(); // mapa de vetores dinamicos em seus tamanhos declarados
 	Integer vectorLenghVerified = 0; // lido em cada termo da expressão interna do vetor 
-	private boolean vectorStatic = false;  // se for estatico -> uma expr , cc joga outra
 	private String __temp = "";
  	
 	private String _exprLOGICContent;
@@ -142,7 +141,7 @@ declaravar:
 	)* SC;
 
 declaraVectorStatic:
-	OB CB tipo ID {    vectorStatic = true;
+	OB CB tipo ID {
 					  _varName = _input.LT(-1).getText();
 	                  _varValue = null; 
 	                  symbol = new IsiVariable(_varName, _tipo + 3, _varValue);
@@ -156,7 +155,6 @@ declaraVectorStatic:
 
 declaraVectorDynamic: // [ numero ] tipo id sc ->      ex : [7] numero a ;
 	OB NUMBER { __temp =  _input.LT(-1).getText(); } CB tipo ID {
-						vectorStatic = false;
 					  _varName = _input.LT(-1).getText();
 	                  _varValue = null; 
 	                  symbol = new IsiVariable(_varName, _tipo + 3, _varValue, __temp.trim());
@@ -259,7 +257,7 @@ attribVector:
                	 		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
                	 	}
 
-					if ( !vectorStatic ) { // se nao for statico 
+					if ( vectorLengthDeclr.get(_exprID) != null ) { 
 							String tamanhoDeclarado = vectorLengthDeclr.get(_exprID);
 							
 							if ( !vectorLenghVerified.toString().trim().equals(tamanhoDeclarado) ){
@@ -313,7 +311,7 @@ termoVector:
 			  		throw new IsiSemanticException("Invalid size atribuiton for the vector named "+_exprID+"\n");
 			  	 }
 			  }
-	| NUMBER {		if (!vectorStatic){  vectorLenghVerified++; }
+	| NUMBER {		if (vectorLengthDeclr.get(_exprID) != null ) {  vectorLenghVerified++; }
               	_exprVectorContent += _input.LT(-1).getText();
 				_tipo = IsiVariable.NUMBER;
 				IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
@@ -323,7 +321,7 @@ termoVector:
                		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
                	 } 
               }
-	| TEXT { 		if (!vectorStatic){  vectorLenghVerified++; }
+	| TEXT { 		if ( vectorLengthDeclr.get(_exprID) != null ){  vectorLenghVerified++; }
 				  _tipo = IsiVariable.TEXT;	
 				  _exprVectorContent += _input.LT(-1).getText();
 				  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
@@ -333,7 +331,7 @@ termoVector:
                		throw new IsiSemanticException("Type mismatch at variable named "+currentVar.getName()+", expecting "+ TYPPES[currentVar.getType()-3] + " but got " + TYPPES[_tipo] +"\n");
                	 }
               }
-	| LOGIC { 		if (!vectorStatic){  vectorLenghVerified++; }
+	| LOGIC { 		if (vectorLengthDeclr.get(_exprID) != null){  vectorLenghVerified++; }
 				  _tipo = IsiVariable.LOGIC;	
 				  _exprVectorContent += _input.LT(-1).getText();
 				  IsiVariable currentVar = (IsiVariable) symbolTable.get(_exprID);
