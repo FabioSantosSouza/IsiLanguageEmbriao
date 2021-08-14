@@ -10,8 +10,8 @@ String  t;
 a = 10;
 b = 15.1;
 c= _key.nextDouble();
-d = a+b+c;
 t = "Teste texto";
+d = a+b+c;
 System.out.println(d);
 System.out.println(t);
   }}

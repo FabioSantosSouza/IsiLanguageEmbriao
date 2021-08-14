@@ -1,7 +1,10 @@
 programa
 
   numero a;
+  texto b;
+  a = 2;
   a = "teste";
-  
+  b = "teste texto";
+  b = 3;
 
 fimprog;

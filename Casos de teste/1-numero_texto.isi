@@ -1,16 +1,26 @@
 programa
 
+//declaracao = tipo ID(VIR ID)* SC
   numero a;
   numero b,c,d;
   texto t;
 
+
+//atribuicao = ID ATTR expr SC
+// expr = TERMO (OP TERMO)*
+// TERMO = ID | NUMBER | TEXT
+
   a = 10;
-  b = 15.1;
+  b = 15.1; 
+
+  
+//'leia' AP ID FP SC
   leia(c);
+  t = "Teste texto";   
+   
   d = a+b+c;
   
-  t = "Teste texto";   
-  
+//'escreva'= AP expr FP SC
   escreva(d);
   escreva(t);
 

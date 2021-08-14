@@ -115,7 +115,7 @@ prog:
 
 decl: (declaravar | declaraVectorStatic | declaraVectorDynamic)+;
 
-declaravar:
+declaravar: 
 	tipo ID {
 	                  _varName = _input.LT(-1).getText();
 	                  _varValue = null; 
@@ -192,7 +192,7 @@ cmd:
 	| attribVector
 	| attribVectorAtIndex;
 
-cmdleitura:
+cmdleitura: 
 	'leia' AP ID { verificaID(_input.LT(-1).getText());
                      	  _readID = _input.LT(-1).getText();
                         } FP SC {
@@ -203,7 +203,7 @@ cmdleitura:
               	stack.peek().add(cmd);
               };
 
-cmdescrita:
+cmdescrita: 
 	'escreva' AP {_exprLOGICContent = "";} (expr | logicexpr) FP SC {
                	CommandEscrita cmd;
 				if (_exprMOL){
@@ -214,7 +214,7 @@ cmdescrita:
                	  stack.peek().add(cmd);
                };
 
-cmdattrib:
+cmdattrib: 
 	attrib SC { 
 				   CommandAtribuicao cmd;
 				if (_exprMOL){
