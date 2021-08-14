@@ -6,7 +6,7 @@ Alunos : Fabio dos santos de souza RA : 11201722051
          
 Neste projeto os seguintes items foram implementados : 
 
-Itens Obrigatórios
+                                                       Itens Obrigatórios
 
 1) Linguagem Destino (C/Java/Python)                                                 ✅
 
@@ -27,7 +27,7 @@ Itens Obrigatórios
 9) Verificar se variável declarada foi ou não utilizada
                                                                                      ✅
                                                                                      
-Itens Opcionais
+                                                      Itens Opcionais
 10) Comentários
                                                                                      ✅
 11) Tipo de dado lógico
