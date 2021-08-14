@@ -1,5 +1,4 @@
 # Compilador - IsiLanguage
-Embriao da IsiLanguage - curso de Compiladores
 Projeto da Disciplina de compiladores, ministrada pelo professor Dr. Francisco Isidro Massetto. UFABC 2021.Q2.
 
 Alunos : Fabio dos santos de souza RA : 11201722051
@@ -7,7 +6,8 @@ Alunos : Fabio dos santos de souza RA : 11201722051
          
 Neste projeto os seguintes items foram implementados : 
 
-                                    Itens Obrigatórios
+Itens Obrigatórios
+
 1) Linguagem Destino (C/Java/Python)                                                 ✅
 
 2) Possuir 2 tipos de variáveis (Int, String)
@@ -27,7 +27,7 @@ Neste projeto os seguintes items foram implementados :
 9) Verificar se variável declarada foi ou não utilizada
                                                                                      ✅
                                                                                      
-                                    Itens Opcionais
+Itens Opcionais
 10) Comentários
                                                                                      ✅
 11) Tipo de dado lógico
