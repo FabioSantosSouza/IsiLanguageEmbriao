@@ -7,7 +7,7 @@ Alunos : Fabio dos santos de souza RA : 11201722051
          
 Neste projeto os seguintes items foram implementados : 
 
-                    Itens Obrigatórios                                            Entregue ?
+                  Itens Obrigatórios                                            Entregue ?
 1) Linguagem Destino (C/Java/Python)                                                 ✅
 
 2) Possuir 2 tipos de variáveis (Int, String)
