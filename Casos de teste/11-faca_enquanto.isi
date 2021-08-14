@@ -11,7 +11,7 @@ programa
     faca{
       c = c + 1;
     }enquanto(c < b);
-  }enquanto(b<a);
+  }enquanto(Verdadeiro);
   
   
   

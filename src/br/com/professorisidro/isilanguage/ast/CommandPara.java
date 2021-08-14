@@ -21,7 +21,7 @@ public class CommandPara extends AbstractCommand{
 			str.append(cmd.generateJavaCode());
 		}
 		str.append("}");
-		return str.toString();
+		return str.toString().replaceAll("Verdadeiro", "true").replaceAll("Falso","false");
 	}
 	
 	@Override

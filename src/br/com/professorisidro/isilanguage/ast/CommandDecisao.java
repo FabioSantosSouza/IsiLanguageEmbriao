@@ -30,7 +30,7 @@ public class CommandDecisao extends AbstractCommand {
 			str.append("}\n");
 		
 		}
-		return str.toString();
+		return str.toString().replaceAll("Verdadeiro", "true").replaceAll("Falso","false");
 	}
 	@Override
 	public String toString() {
