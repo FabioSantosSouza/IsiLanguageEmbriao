@@ -198,6 +198,8 @@ cmdleitura:
                         } FP SC {
               	IsiVariable var = (IsiVariable)symbolTable.get(_readID);
               	CommandLeitura cmd = new CommandLeitura(_readID, var);
+              	var.setValue("value");
+               	symbolTable.add(var); 
               	stack.peek().add(cmd);
               };
 

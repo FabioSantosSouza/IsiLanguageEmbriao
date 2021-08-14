@@ -1,19 +1,17 @@
 programa
 
   numero a;
-  texto b;
+  numero b,c,d;
+  texto t;
 
   a = 10;
-  b = "Teste texto";
+  b = 15.1;
+  leia(c);
+  d = a+b+c;
   
-  //Erros
-  a = "Teste texto";
-  b = "10";
+  t = "Teste texto";   
   
-  
-  
-  escreva(a);
-  escreva(b);
-  
+  escreva(d);
+  escreva(t);
 
 fimprog;
